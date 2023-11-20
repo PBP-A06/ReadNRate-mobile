@@ -1,4 +1,4 @@
-# ReadNRate - _Mobile Version_
+# ReadNRate - _Mobile Version_ ![Jekyll site CI](https://github.com/gede-books/gede-books/workflows/Jekyll%20site%20CI/badge.svg)
 
 ## Link _Spreadsheet_ Berita Acara:
 https://docs.google.com/spreadsheets/d/1d7Pe_p0Om0DrqAAr2B95EZXYwV76Dnk9ytXRWAJyIvQ/edit?usp=sharing
