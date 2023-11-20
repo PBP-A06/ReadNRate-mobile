@@ -1,5 +1,8 @@
 # ReadNRate - _Mobile Version_
 
+## Link _Spreadsheet_ Berita Acara:
+https://docs.google.com/spreadsheets/d/1d7Pe_p0Om0DrqAAr2B95EZXYwV76Dnk9ytXRWAJyIvQ/edit?usp=sharing
+
 ## Daftar Anggota A06:
 
 - 2206083445 - Soros Febriano <br>
