@@ -72,4 +72,3 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
 
 ## Alur Pengintegrasian dengan Aplikasi Web
 
-## Tautan Berita Acara Kerja Kelompok
