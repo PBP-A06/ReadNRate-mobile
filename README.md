@@ -71,10 +71,16 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
    - Menelusuri Readlists
 
 ## Alur Pengintegrasian dengan Aplikasi Web
-Mengimplementasikan sebuah wrapper class dengan menggunakan library http dan map untuk mendukung penggunaan cookie-based authentication pada aplikasi. \n
+Mengimplementasikan sebuah wrapper class dengan menggunakan library http dan map untuk mendukung penggunaan cookie-based authentication pada aplikasi. 
+<br>
 ↓
-Mengimplementasikan REST API pada Django (views.py) dengan menggunakan JsonResponse atau Django JSON Serializer.\n
+<br>
+Mengimplementasikan REST API pada Django (views.py) dengan menggunakan JsonResponse atau Django JSON Serializer.
+<br>
 ↓
-Mengimplementasikan desain front-end untuk aplikasi berdasarkan desain website yang sudah ada sebelumnya.\n
+<br>
+Mengimplementasikan desain front-end untuk aplikasi berdasarkan desain website yang sudah ada sebelumnya.
+<br>
 ↓
-Melakukan integrasi antara front-end dengan back-end dengan menggunakan konsep asynchronous HTTP.\n
+<br>
+Melakukan integrasi antara front-end dengan back-end dengan menggunakan konsep asynchronous HTTP.<br>
