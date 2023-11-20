@@ -25,31 +25,31 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
 
 ## Daftar Modul dan Pengembang
 
-1. **Leaderboard**
+1. **Leaderboard** (Ravie Hasan Abud)
    - Dibagi menjadi 3 jenis leaderboard:
      1. Books Leaderboard by Rating: buku dengan rating tertinggi
      2. Books Leaderboard by Likes: buku paling populer (likes terbanyak)
      3. Readlist Leaderboard: readlist terbaik (likes terbanyak)
    - Dapat mencari peringkat suatu buku berdasarkan rating
-2. **Readlist**
+2. **Readlist** (Arditheus Immanuel Hanfree)
    - Pengguna dapat menambahkan daftar bacaan sendiri, seperti fitur “playlist” pada music player.
    - Merupakan halaman yang menampilkan 5 readlist yang telah dibuat oleh seluruh user yang terdaftar.
-3. **Profile: History & Top 3 Books**
+3. **Profile: History & Top 3 Books** (Daffa Al Fathan Zaki)
    - Menampilkan seluruh buku yang telah dibaca user.
    - Menampilkan 3 buku terbaik menurut user.
-4. **Bookmarks & Likes**
+4. **Bookmarks & Likes** (Muhammad Fatih Zain & Daffa Al Fathan Zaki)
    - Melacak buku yang sedang Anda baca, telah Anda baca, dan ingin Anda baca.
    - Halaman bookmarks dapat digunakan untuk lihat buku mana saja yang sedang dibaca atau ingin dibaca di masa depan.
    - Merupakan sebuah tombol pada halaman review.
    - Hanya dapat dilihat oleh user sendiri secara private.
-5. **Review**
+5. **Review** (Muhammad Fatih Zain)
    - Menambahkan buku yang dipilih ke daftar buku yang telah dibaca user dan meminta rating user mengenai buku tersebut.
    - User dapat memberikan comment untuk menyampaikan review terhadap buku.
    - Pengguna dapat memberikan rating buku dengan skala 5.
-6. **Home Page**
+6. **Home Page** (Soros Febriano)
    - Menampilkan 5 buku secara acak
    - Menampilkan _navigation bar_ yang mengarah ke list seluruh buku, readlist, leaderboard, dan sign in atau sign up.
-7. **Register dan Sign In**
+7. **Register dan Sign In** (Soros Febriano)
    - Autentikasi dan otorisasi pengguna
 
 ## Daftar Peran Pengguna
