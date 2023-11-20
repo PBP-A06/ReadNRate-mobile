@@ -17,9 +17,9 @@ Seiring berkembangnya zaman, aktivitas literasi semakin beralih ke digitalisasi.
 
 **ReadNRate** dirancang dengan harapan dapat membuka minat masyarakat Indonesia terhadap budaya membaca yang sebenarnya menarik, sehingga pengetahuan dan keterampilan masyarakat meningkat. **ReadNRate** menyediakan berbagai fitur, seperti rekomendasi buku bacaan sesuai preferensi pembaca, sistem leaderboard yang menunjukkan buku favorit seluruh pengguna, hingga katalog buku yang dapat dibuat pembaca sesuai tema yang diinginkan. Pembaca diberikan kebebasan untuk menuliskan ulasan dan menyimpan koleksi buku pada profile yang dapat dilihat oleh teman atau publik. Semua ini sesuai dengan misi **ReadNRate**, yaitu menjadi platform bagi para pembaca untuk menemukan buku yang mereka suka dan mendorong mereka untuk menggali dunia literasi lebih dalam.
 
-**ReadNRate** adalah sebuah situs global yang didirikan pada 2023 dan dirancang sebagai komunitas tempat berkumpul para penggemar buku sejati. Situs ini mengajak seluruh pembaca untuk menilai dan memberikan saran pada buku yang sudah mereka baca sehingga dapat menjadi pertimbangan buku bacaan selanjutnya bagi orang lain.
+**ReadNRate** adalah sebuah aplikasi global berbasis _mobile_ yang didirikan pada 2023 dan dirancang sebagai komunitas tempat berkumpul para penggemar buku sejati. Situs ini mengajak seluruh pembaca untuk menilai dan memberikan saran pada buku yang sudah mereka baca sehingga dapat menjadi pertimbangan buku bacaan selanjutnya bagi orang lain.
 
-Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukai dan mendapat lebih banyak ilmu dari membaca.
+Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukaiS dan mendapat lebih banyak ilmu dari membaca.
 
 Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga memberikan saran yang disesuaikan dengan selera literasi Anda.
 
