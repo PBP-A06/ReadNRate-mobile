@@ -1,5 +1,8 @@
 # ReadNRate - _Mobile Version_
 
+## Link _Spreadsheet_ Berita Acara:
+https://docs.google.com/spreadsheets/d/1d7Pe_p0Om0DrqAAr2B95EZXYwV76Dnk9ytXRWAJyIvQ/edit?usp=sharing
+
 ## Daftar Anggota A06:
 
 - 2206083445 - Soros Febriano <br>
@@ -14,39 +17,39 @@ Seiring berkembangnya zaman, aktivitas literasi semakin beralih ke digitalisasi.
 
 **ReadNRate** dirancang dengan harapan dapat membuka minat masyarakat Indonesia terhadap budaya membaca yang sebenarnya menarik, sehingga pengetahuan dan keterampilan masyarakat meningkat. **ReadNRate** menyediakan berbagai fitur, seperti rekomendasi buku bacaan sesuai preferensi pembaca, sistem leaderboard yang menunjukkan buku favorit seluruh pengguna, hingga katalog buku yang dapat dibuat pembaca sesuai tema yang diinginkan. Pembaca diberikan kebebasan untuk menuliskan ulasan dan menyimpan koleksi buku pada profile yang dapat dilihat oleh teman atau publik. Semua ini sesuai dengan misi **ReadNRate**, yaitu menjadi platform bagi para pembaca untuk menemukan buku yang mereka suka dan mendorong mereka untuk menggali dunia literasi lebih dalam.
 
-**ReadNRate** adalah sebuah situs global yang didirikan pada 2023 dan dirancang sebagai komunitas tempat berkumpul para penggemar buku sejati. Situs ini mengajak seluruh pembaca untuk menilai dan memberikan saran pada buku yang sudah mereka baca sehingga dapat menjadi pertimbangan buku bacaan selanjutnya bagi orang lain.
+**ReadNRate** adalah sebuah aplikasi global berbasis _mobile_ yang didirikan pada 2023 dan dirancang sebagai komunitas tempat berkumpul para penggemar buku sejati. Situs ini mengajak seluruh pembaca untuk menilai dan memberikan saran pada buku yang sudah mereka baca sehingga dapat menjadi pertimbangan buku bacaan selanjutnya bagi orang lain.
 
-Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukai dan mendapat lebih banyak ilmu dari membaca.
+Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukaiS dan mendapat lebih banyak ilmu dari membaca.
 
 Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga memberikan saran yang disesuaikan dengan selera literasi Anda.
 
 ## Daftar Modul dan Pengembang
 
-1. **Leaderboard**
+1. **Leaderboard** (Ravie Hasan Abud)
    - Dibagi menjadi 3 jenis leaderboard:
      1. Books Leaderboard by Rating: buku dengan rating tertinggi
      2. Books Leaderboard by Likes: buku paling populer (likes terbanyak)
      3. Readlist Leaderboard: readlist terbaik (likes terbanyak)
    - Dapat mencari peringkat suatu buku berdasarkan rating
-2. **Readlist**
+2. **Readlist** (Arditheus Immanuel Hanfree)
    - Pengguna dapat menambahkan daftar bacaan sendiri, seperti fitur “playlist” pada music player.
    - Merupakan halaman yang menampilkan 5 readlist yang telah dibuat oleh seluruh user yang terdaftar.
-3. **Profile: History & Top 3 Books**
+3. **Profile: History & Top 3 Books** (Daffa Al Fathan Zaki)
    - Menampilkan seluruh buku yang telah dibaca user.
    - Menampilkan 3 buku terbaik menurut user.
-4. **Bookmarks & Likes**
+4. **Bookmarks & Likes** (Muhammad Fatih Zain & Daffa Al Fathan Zaki)
    - Melacak buku yang sedang Anda baca, telah Anda baca, dan ingin Anda baca.
    - Halaman bookmarks dapat digunakan untuk lihat buku mana saja yang sedang dibaca atau ingin dibaca di masa depan.
    - Merupakan sebuah tombol pada halaman review.
    - Hanya dapat dilihat oleh user sendiri secara private.
-5. **Review**
+5. **Review** (Muhammad Fatih Zain)
    - Menambahkan buku yang dipilih ke daftar buku yang telah dibaca user dan meminta rating user mengenai buku tersebut.
    - User dapat memberikan comment untuk menyampaikan review terhadap buku.
    - Pengguna dapat memberikan rating buku dengan skala 5.
-6. **Home Page**
+6. **Home Page** (Soros Febriano)
    - Menampilkan 5 buku secara acak
    - Menampilkan _navigation bar_ yang mengarah ke list seluruh buku, readlist, leaderboard, dan sign in atau sign up.
-7. **Register dan Sign In**
+7. **Register dan Sign In** (Soros Febriano)
    - Autentikasi dan otorisasi pengguna
 
 ## Daftar Peran Pengguna
@@ -68,5 +71,10 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
    - Menelusuri Readlists
 
 ## Alur Pengintegrasian dengan Aplikasi Web
-
-## Tautan Berita Acara Kerja Kelompok
+Mengimplementasikan sebuah wrapper class dengan menggunakan library http dan map untuk mendukung penggunaan cookie-based authentication pada aplikasi. \n
+↓
+Mengimplementasikan REST API pada Django (views.py) dengan menggunakan JsonResponse atau Django JSON Serializer.\n
+↓
+Mengimplementasikan desain front-end untuk aplikasi berdasarkan desain website yang sudah ada sebelumnya.\n
+↓
+Melakukan integrasi antara front-end dengan back-end dengan menggunakan konsep asynchronous HTTP.\n
