@@ -1,4 +1,4 @@
-# ReadNRate - _Mobile Version_
+# ReadNRate - _Mobile Version_ ![Jekyll site CI](https://github.com/gede-books/gede-books/workflows/Jekyll%20site%20CI/badge.svg)
 
 ## Link _Spreadsheet_ Berita Acara:
 https://docs.google.com/spreadsheets/d/1d7Pe_p0Om0DrqAAr2B95EZXYwV76Dnk9ytXRWAJyIvQ/edit?usp=sharing
@@ -19,9 +19,9 @@ Seiring berkembangnya zaman, aktivitas literasi semakin beralih ke digitalisasi.
 
 **ReadNRate** adalah sebuah aplikasi global berbasis _mobile_ yang didirikan pada 2023 dan dirancang sebagai komunitas tempat berkumpul para penggemar buku sejati. Situs ini mengajak seluruh pembaca untuk menilai dan memberikan saran pada buku yang sudah mereka baca sehingga dapat menjadi pertimbangan buku bacaan selanjutnya bagi orang lain.
 
-Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukaiS dan mendapat lebih banyak ilmu dari membaca.
+Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukai dan mendapat lebih banyak ilmu dari membaca.
 
-Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga memberikan saran yang disesuaikan dengan selera literasi Anda.
+Kami menyediakan dan menganalisis lebih dari 100 buku untuk Anda nilai dan juga memberikan saran yang disesuaikan dengan selera literasi Anda.
 
 ## Daftar Modul dan Pengembang
 
@@ -71,10 +71,16 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
    - Menelusuri Readlists
 
 ## Alur Pengintegrasian dengan Aplikasi Web
-Mengimplementasikan sebuah wrapper class dengan menggunakan library http dan map untuk mendukung penggunaan cookie-based authentication pada aplikasi. \n
+Mengimplementasikan sebuah wrapper class dengan menggunakan library http dan map untuk mendukung penggunaan cookie-based authentication pada aplikasi. 
+<br>
 ↓
-Mengimplementasikan REST API pada Django (views.py) dengan menggunakan JsonResponse atau Django JSON Serializer.\n
+<br>
+Mengimplementasikan REST API pada Django (views.py) dengan menggunakan JsonResponse atau Django JSON Serializer.
+<br>
 ↓
-Mengimplementasikan desain front-end untuk aplikasi berdasarkan desain website yang sudah ada sebelumnya.\n
+<br>
+Mengimplementasikan desain front-end untuk aplikasi berdasarkan desain website yang sudah ada sebelumnya.
+<br>
 ↓
-Melakukan integrasi antara front-end dengan back-end dengan menggunakan konsep asynchronous HTTP.\n
+<br>
+Melakukan integrasi antara front-end dengan back-end dengan menggunakan konsep asynchronous HTTP.<br>
