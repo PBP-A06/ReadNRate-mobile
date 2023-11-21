@@ -19,9 +19,9 @@ Seiring berkembangnya zaman, aktivitas literasi semakin beralih ke digitalisasi.
 
 **ReadNRate** adalah sebuah aplikasi global berbasis _mobile_ yang didirikan pada 2023 dan dirancang sebagai komunitas tempat berkumpul para penggemar buku sejati. Situs ini mengajak seluruh pembaca untuk menilai dan memberikan saran pada buku yang sudah mereka baca sehingga dapat menjadi pertimbangan buku bacaan selanjutnya bagi orang lain.
 
-Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukaiS dan mendapat lebih banyak ilmu dari membaca.
+Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukai dan mendapat lebih banyak ilmu dari membaca.
 
-Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga memberikan saran yang disesuaikan dengan selera literasi Anda.
+Kami menyediakan dan menganalisis lebih dari 100 buku untuk Anda nilai dan juga memberikan saran yang disesuaikan dengan selera literasi Anda.
 
 ## Daftar Modul dan Pengembang
 
