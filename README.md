@@ -1,4 +1,4 @@
-# ReadNRate - _Mobile Version_ ![Jekyll site CI](https://github.com/PBP-A06/ReadNRate-mobile/workflows/Jekyll%20site%20CI/badge.svg)
+# ReadNRate - _Mobile Version_ ![Jekyll site CI](https://github.com/gede-books/gede-books/workflows/Jekyll%20site%20CI/badge.svg)
 https://readnrate.adaptable.app/
 
 ## Link _Spreadsheet_ Berita Acara:
