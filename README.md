@@ -1,5 +1,9 @@
 # ReadNRate - _Mobile Version_ ![Jekyll site CI](https://github.com/gede-books/gede-books/workflows/Jekyll%20site%20CI/badge.svg)
 https://readnrate.adaptable.app/
+[![Deploy](https://github.com/PBP-A06/ReadNRate/workflows/Deploy/badge.svg)](https://github.com/PBP-A06/ReadNRate/actions?query=workflow:"Deploy")
+[![GitHub tag](https://img.shields.io/github/tag/PBP-A06/ReadNRate?include_prereleases=&sort=semver&color=blue)](https://github.com/PBP-A06/ReadNRate/releases/)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+
 
 ## Link _Spreadsheet_ Berita Acara:
 https://docs.google.com/spreadsheets/d/1d7Pe_p0Om0DrqAAr2B95EZXYwV76Dnk9ytXRWAJyIvQ/edit?usp=sharing
