@@ -1,5 +1,7 @@
 # ReadNRate - _Mobile Version_ 
-https://readnrate.adaptable.app/
+
+#### _Web Version_: https://readnrate.adaptable.app/
+#### APK _Mobile Version_: https://install.appcenter.ms/orgs/readnrate/apps/readnrate/distribution_groups/public
 
 ![staging](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/staging.yml/badge.svg)
 ![pre-release](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/pre-release.yml/badge.svg)
