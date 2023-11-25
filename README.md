@@ -1,7 +1,10 @@
-# ReadNRate - _Mobile Version_ ![Jekyll site CI](https://github.com/gede-books/gede-books/workflows/Jekyll%20site%20CI/badge.svg)
+# ReadNRate - _Mobile Version_ 
 https://readnrate.adaptable.app/
 
-[![GitHub tag](https://img.shields.io/github/tag/PBP-A06/ReadNRate?include_prereleases=&sort=semver&color=blue)](https://github.com/PBP-A06/ReadNRate/releases/)
+![staging](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/staging.yml/badge.svg)
+![pre-release](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/pre-release.yml/badge.svg)
+![release](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/release.yml/badge.svg)
+
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
 
