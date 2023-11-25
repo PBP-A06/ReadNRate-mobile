@@ -4,6 +4,7 @@ https://readnrate.adaptable.app/
 ![staging](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/staging.yml/badge.svg)
 ![pre-release](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/pre-release.yml/badge.svg)
 ![release](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/release.yml/badge.svg)
+[![Build status](https://build.appcenter.ms/v0.1/apps/3ed7a656-b1f2-40a1-9b7b-538c7a9913d8/branches/main/badge)](https://appcenter.ms)
 
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
