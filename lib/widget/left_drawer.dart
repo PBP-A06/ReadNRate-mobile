@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/screens/book_list.dart';
 import 'package:project/screens/menu.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -55,6 +56,7 @@ class LeftDrawer extends StatelessWidget {
                   ));
             },
           ),
+          //TODO: All Books masih routing ke book_list.dart !!!
           ListTile(
             leading: const Icon(
               Icons.checklist,
@@ -64,7 +66,13 @@ class LeftDrawer extends StatelessWidget {
               'All Books',
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {},
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BooksPage()),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(
