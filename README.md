@@ -1,4 +1,15 @@
-# ReadNRate - _Mobile Version_ ![Jekyll site CI](https://github.com/gede-books/gede-books/workflows/Jekyll%20site%20CI/badge.svg)
+# ReadNRate - _Mobile Version_ 
+
+#### _Web Version_: https://readnrate.adaptable.app/
+#### APK _Mobile Version_: https://install.appcenter.ms/orgs/readnrate/apps/readnrate/distribution_groups/public
+
+![staging](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/staging.yml/badge.svg)
+![pre-release](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/pre-release.yml/badge.svg)
+![release](https://github.com/PBP-A06/ReadNRate-mobile/actions/workflows/release.yml/badge.svg)
+[![Build status](https://build.appcenter.ms/v0.1/apps/3ed7a656-b1f2-40a1-9b7b-538c7a9913d8/branches/main/badge)](https://appcenter.ms)
+
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
+
 
 ## Link _Spreadsheet_ Berita Acara:
 https://docs.google.com/spreadsheets/d/1d7Pe_p0Om0DrqAAr2B95EZXYwV76Dnk9ytXRWAJyIvQ/edit?usp=sharing
