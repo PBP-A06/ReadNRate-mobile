@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/leaderboard/screens/leaderboard_page.dart';
 import 'package:project/screens/book_list.dart';
 import 'package:project/screens/menu.dart';
 
@@ -71,6 +72,23 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const BooksPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.checklist,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Leaderboard',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              // Route ke leaderboard page
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LeaderboardPage()),
               );
             },
           ),

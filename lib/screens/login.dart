@@ -1,6 +1,7 @@
 import 'package:project/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:project/widget/left_drawer.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -40,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             appBar: AppBar(
                 title: const Text('Login'),
             ),
+            drawer: const LeftDrawer(),
             body: Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -69,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                                 // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                                 // Untuk menyambungkan Android emulator dengan Django pada localhost,
                                 // gunakan URL http://10.0.2.2/
-                                final response = await request.login("https://readnrate.adaptable.app//auth/login/", {
+                                final response = await request.login("https://readnrate.adaptable.app/auth/login/", {
                                 'username': username,
                                 'password': password,
                                 });
