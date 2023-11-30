@@ -1,6 +1,6 @@
-import 'package:project/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:project/home/screens/menu.dart';
 import 'package:provider/provider.dart';
 
 void main() {
