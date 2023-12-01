@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:project/screens/login.dart';
+import 'package:project/main/screens/login.dart';
 import 'package:provider/provider.dart';
 
 class Option {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:project/models/book.dart';
+import 'package:project/book/models/book.dart';
 
-import 'package:project/widget/left_drawer.dart';
+import 'package:project/home/widget/left_drawer.dart';
 
 class BooksPage extends StatefulWidget {
     const BooksPage({Key? key}) : super(key: key);
