@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF14171C),
       appBar: AppBar(
         title: const Text('Register'),
         backgroundColor: Colors.grey[800],

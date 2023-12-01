@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     Widget build(BuildContext context) {
         final request = context.watch<CookieRequest>();
         return Scaffold(
+            backgroundColor: const Color(0xFF14171C),
             appBar: AppBar(
                 title: const Text('Login'),
             ),
