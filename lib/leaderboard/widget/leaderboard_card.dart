@@ -14,42 +14,35 @@ class BookCard extends StatelessWidget {
         color: Colors.grey[800],
         borderRadius: BorderRadius.circular(40),
         child: Container(
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(12),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ClipRRect(
-              //   // rounded image
-              //   borderRadius: BorderRadius.circular(15.0),
-              //   child: Image.network(
-              //     "${book.fields.imageLink}",
-              //     width: 150.0,
-              //   ),
-              // ),
               Center(
                 child: ClipRRect(
                   // rounded image
                   borderRadius: BorderRadius.circular(15.0),
                   child: Image.network(
-                    "https://placehold.co/170x200/png",
-                    width: 170,
-                    height: 200,
-                    fit: BoxFit.cover,
+                    "${book.fields.imageLink}",
+                    // "https://placehold.co/170x200/png",
+                    width: 125.0,
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 5),
               Text(
                 "${book.fields.title}",
                 textAlign: TextAlign.left,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 5),
               Text(
                 "--${book.fields.category}",
                 textAlign: TextAlign.right,
@@ -62,6 +55,7 @@ class BookCard extends StatelessWidget {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.grey.shade500),
                   ),
+                  // nanti redirect to details page in other modul
                   onPressed: () {
                     // Navigator.push(
                     //   context,
@@ -72,7 +66,7 @@ class BookCard extends StatelessWidget {
                   },
                   child: const Text(
                     "See Details",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 13),
                   ),
                 ),
               ),
