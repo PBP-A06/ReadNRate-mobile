@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/widget/left_drawer.dart';
-import 'package:project/widget/option_card.dart';
+import 'package:project/home/widget/left_drawer.dart';
+import 'package:project/home/widget/option_card.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -16,9 +16,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text(
-          'ReadNRate Mobile',
-        ),
+        title: Image.asset(
+              'assets/logolong.jpg', // Replace with the actual path to your logo image
+              height: 40, // Adjust the height as needed
+            ),
+            centerTitle: true,
         backgroundColor: Colors.grey.shade800,
         foregroundColor: Colors.white,
       ),
