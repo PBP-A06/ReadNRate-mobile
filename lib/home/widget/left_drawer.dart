@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/main/screens/book_list.dart';
 import 'package:project/home/screens/menu.dart';
+import 'package:project/main/screens/login.dart';
+import 'package:project/main/screens/register.dart';
 
 class UserProfileWidget extends StatelessWidget {
   final String username;
@@ -141,6 +143,38 @@ class LeftDrawer extends StatelessWidget {
             ),
             onTap: () {
               // Handle logout here
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.login,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Sign in',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.person_add,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Register',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RegisterPage()),
+              );
             },
           ),
         ],

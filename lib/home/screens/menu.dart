@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Image.asset(
-              'assets/logolong.jpg', // Replace with the actual path to your logo image
+              'assets/logolong.png', // Replace with the actual path to your logo image
               height: 40, // Adjust the height as needed
             ),
             centerTitle: true,
