@@ -3,9 +3,11 @@ import 'package:project/main/screens/book_list.dart';
 import 'package:project/home/screens/menu.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:project/main/screens/register.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class UserProfileWidget extends StatelessWidget {
-  final String username;
+  String username;
 
   UserProfileWidget({required this.username});
 
@@ -39,17 +41,33 @@ class LeftDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Drawer(
       backgroundColor: Color(0xFF2C343F),
       child: ListView(
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Color(0xFF2C343F), // Use the same color as the background
+          if (usernameGlobal != null) //USER IS LOGGED IN
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF2C343F),
+              ),
+              padding: EdgeInsets.all(0),
+              child: UserProfileWidget(username: usernameGlobal!), // Use ! to assert non-null
+            )
+          else //USER NOT LOGGED IN
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF2C343F),
+              ),
+              padding: EdgeInsets.all(0),
+              child: Container(
+                // Replace the placeholder below with your logo widget
+                child: Image.asset(
+                  'assets/logolong.png', // Replace with the path to your logo image
+                  height: 80, // Adjust the height as needed
+                ),
+              ),
             ),
-            padding: EdgeInsets.all(0), // Remove default padding
-            child: UserProfileWidget(username: 'JohnDoe'), // Replace with actual username
-          ),
           ListTile(
             leading: const Icon(
               Icons.home_outlined,
@@ -100,83 +118,105 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.bookmark,
-              color: Colors.white,
+          if (usernameGlobal != null)
+            ListTile(
+              leading: const Icon(
+                Icons.bookmark,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Bookmarks',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BooksPage()),
+                );
+              },
             ),
-            title: const Text(
-              'Bookmarks',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BooksPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.favorite,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Likes',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BooksPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Logout',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              // Handle logout here
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.login,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Sign in',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.person_add,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Register',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RegisterPage()),
-              );
-            },
-          ),
+            if (usernameGlobal != null)
+              ListTile(
+                leading: const Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Likes',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BooksPage()),
+                  );
+                },
+              ),
+            if (usernameGlobal != null)
+              ListTile(
+                leading: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                    final response = await request.logout(
+                        "https://readnrate.adaptable.app/auth/logout/");
+                    String message = response["message"];
+                    usernameGlobal = null;
+                    if (response['status']) {
+                      String uname = response["username"];
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message Sampai jumpa, $uname."),
+                      ));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message"),
+                      ));
+                    }
+                },
+              ),
+            if (usernameGlobal == null)
+              ListTile(
+                leading: const Icon(
+                  Icons.login,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Sign in',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+              ),
+            if (usernameGlobal == null)
+              ListTile(
+                leading: const Icon(
+                  Icons.person_add,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Register',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  );
+                },
+              ),
         ],
       ),
     );

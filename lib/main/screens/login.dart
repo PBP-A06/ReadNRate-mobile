@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:project/home/widget/left_drawer.dart';
 import 'package:provider/provider.dart';
+String? usernameGlobal;
 
 class LoginPage extends StatefulWidget {
     const LoginPage({super.key});
@@ -12,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+    
     final TextEditingController _usernameController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
 
@@ -20,17 +22,31 @@ class _LoginPageState extends State<LoginPage> {
         final request = context.watch<CookieRequest>();
         return Scaffold(
             backgroundColor: const Color(0xFF14171C),
+            extendBodyBehindAppBar: true,            // Transparent App Bar
             appBar: AppBar(
-                title: const Text('Login'),
+                backgroundColor: Colors.transparent, // Transparent
+                elevation: 0,                          // No shadow
+                foregroundColor: Colors.white,
             ),
             drawer: const LeftDrawer(),
-            body: Container(
+            body:
+              Stack(
+                children: [
+                  // Background image
+                  Image.asset(
+                    'assets/20000LeaguesUnderTheSeaBookCover.jpg', // Replace with your background image path
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+              Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                         TextField(
                             controller: _usernameController,
+                            style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
                                 labelText: 'Username',
                             ),
@@ -38,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(height: 12.0),
                         TextField(
                             controller: _passwordController,
+                            style: const TextStyle(color: Colors.white),
                             decoration: const InputDecoration(
                                 labelText: 'Password',
                             ),
@@ -50,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
                                 String password = _passwordController.text;
 
                                 // Cek kredensial
-                                // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                                 // Untuk menyambungkan Android emulator dengan Django pada localhost,
                                 // gunakan URL http://10.0.2.2/
                                 final response = await request.login("https://readnrate.adaptable.app//auth/login/", {
@@ -61,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                                 if (request.loggedIn) {
                                     String message = response['message'];
                                     String uname = response['username'];
+                                    usernameGlobal = response['username'];
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(builder: (context) => HomePage()),
@@ -89,10 +106,12 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                             },
                             child: const Text('Login'),
-                        ),
-                    ],
+                          ),
+                      ],
+                  ),
                 ),
-            ),
-        );
-    }
+          ],
+        ),
+    );
+  }
 }

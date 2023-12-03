@@ -21,9 +21,11 @@ class _RegisterPageState extends State<RegisterPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       backgroundColor: const Color(0xFF14171C),
+      extendBodyBehindAppBar: true,            // Transparent App Bar
       appBar: AppBar(
         title: const Text('Register'),
-        backgroundColor: Colors.grey[800],
+        backgroundColor: Colors.transparent, // Transparent
+        elevation: 0,                          // No shadow
         foregroundColor: Colors.white,
       ),
       body: Container(

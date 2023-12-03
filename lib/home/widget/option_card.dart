@@ -38,6 +38,7 @@ class OptionCard extends StatelessWidget {
                   final response = await request.logout(
                       "https://readnrate.adaptable.app/auth/logout/");
                   String message = response["message"];
+                  usernameGlobal = null;
                   if (response['status']) {
                     String uname = response["username"];
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
