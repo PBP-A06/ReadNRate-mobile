@@ -95,24 +95,6 @@ class LeftDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(
-              Icons.checklist,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Leaderboard',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              // Route ke leaderboard page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const LeaderboardPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
               Icons.logout,
               color: Colors.white,
             ),
