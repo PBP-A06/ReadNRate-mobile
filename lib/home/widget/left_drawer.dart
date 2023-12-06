@@ -6,6 +6,7 @@ import 'package:project/main/screens/register.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class UserProfileWidget extends StatelessWidget {
   String username;
 
