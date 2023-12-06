@@ -2,8 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/book/models/book.dart';
+// import 'package:project/readlist/models/readlist.dart';
 import 'package:project/home/widget/left_drawer.dart';
-import 'package:project/leaderboard/widget/leaderboard_card.dart';
+import 'package:project/leaderboard/widget/book_leaderboard_card.dart';
+import 'package:project/leaderboard/models/readlist.dart';
+import 'package:project/leaderboard/widget/dropdown.dart';
+import 'package:project/leaderboard/widget/readlist_leaderboard_card.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({Key? key}) : super(key: key);
@@ -13,7 +17,8 @@ class LeaderboardPage extends StatefulWidget {
 }
 
 class _LeaderboardPageState extends State<LeaderboardPage> {
-  late Future<List<Book>> Function() fetchDataFunction;
+  late Future<List<dynamic>> Function() fetchDataFunction; // Book/Readlist
+  String titleText = "Top 10 by Rating";
 
   @override
   void initState() {
@@ -22,6 +27,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
   }
 
   Future<List<Book>> fetch10BestRatedBooks() async {
+    titleText = "Top 10 by Rating";
     var url = Uri.parse(
         'https://readnrate.adaptable.app/leaderboard/get-10-best-rated-books/');
     var response = await http.get(
@@ -33,16 +39,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Book
-    List<Book> list_book = [];
+    List<Book> listBook = [];
     for (var d in data) {
       if (d != null) {
-        list_book.add(Book.fromJson(d));
+        listBook.add(Book.fromJson(d));
       }
     }
-    return list_book;
+    return listBook;
   }
 
   Future<List<Book>> fetch100BestRatedBooks() async {
+    titleText = "Top 100 by Rating";
     var url = Uri.parse(
         'https://readnrate.adaptable.app/leaderboard/get-100-best-rated-books/');
     var response = await http.get(
@@ -54,16 +61,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Book
-    List<Book> list_book = [];
+    List<Book> listBook = [];
     for (var d in data) {
       if (d != null) {
-        list_book.add(Book.fromJson(d));
+        listBook.add(Book.fromJson(d));
       }
     }
-    return list_book;
+    return listBook;
   }
 
   Future<List<Book>> fetch10MostLikedBooks() async {
+    titleText = "Top 10 by Likes";
     var url = Uri.parse(
         'https://readnrate.adaptable.app/leaderboard/get-10-most-liked-books/');
     var response = await http.get(
@@ -75,16 +83,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Book
-    List<Book> list_book = [];
+    List<Book> listBook = [];
     for (var d in data) {
       if (d != null) {
-        list_book.add(Book.fromJson(d));
+        listBook.add(Book.fromJson(d));
       }
     }
-    return list_book;
+    return listBook;
   }
 
   Future<List<Book>> fetch100MostLikedBooks() async {
+    titleText = "Top 100 by Likes";
     var url = Uri.parse(
         'https://readnrate.adaptable.app/leaderboard/get-100-most-liked-books/');
     var response = await http.get(
@@ -96,16 +105,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Book
-    List<Book> list_book = [];
+    List<Book> listBook = [];
     for (var d in data) {
       if (d != null) {
-        list_book.add(Book.fromJson(d));
+        listBook.add(Book.fromJson(d));
       }
     }
-    return list_book;
+    return listBook;
   }
 
-  Future<List<Book>> fetchReadlists() async {
+  Future<List<Readlist>> fetchReadlists() async {
+    titleText = "Top 10 Readlists by Likes";
     var url =
         Uri.parse('https://readnrate.adaptable.app/leaderboard/get-readlists/');
     var response = await http.get(
@@ -117,13 +127,13 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
     // melakukan konversi data json menjadi object Book
-    List<Book> list_book = [];
+    List<Readlist> listReadlist = [];
     for (var d in data) {
       if (d != null) {
-        list_book.add(Book.fromJson(d));
+        listReadlist.add(Readlist.fromJson(d));
       }
     }
-    return list_book;
+    return listReadlist;
   }
 
   @override
@@ -147,7 +157,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                   return const Column(
                     children: [
                       Text(
-                        "Tidak ada data buku.",
+                        "Belum ada data.",
                         style:
                             TextStyle(color: Color(0xff59A5D8), fontSize: 20),
                       ),
@@ -164,10 +174,10 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                         // Widget untuk menampilkan children secara vertikal
                         children: [
                           // nanti sesuaikan berdasarkan button ayng diklik
-                          const Text(
-                            'Top X by X', // Top 10/100 by Rating/Likes/Readlist
+                          Text(
+                            titleText, // Top 10/100 by Rating/Likes/Readlist
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 30,
                               color: Colors.white,
                             ),
@@ -272,9 +282,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                             ),
                             // nanti benerin, not done yet
                             onPressed: () {
-                              // setState(() {
-                              //   fetchDataFunction = fetchReadlists;
-                              // });
+                              setState(() {
+                                fetchDataFunction = fetchReadlists;
+                              });
                             },
                             child: const Text(
                               "Readlist (Top 10)",
@@ -282,21 +292,37 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                   TextStyle(color: Colors.white, fontSize: 13),
                             ),
                           ),
-                          // Grid layout
-                          GridView.count(
-                            // Container pada card kita.
-                            primary: true,
-                            padding: const EdgeInsets.all(10),
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            crossAxisCount: 2,
-                            shrinkWrap: true,
-                            childAspectRatio: 0.55,
-                            children:
-                                (snapshot.data! as List<Book>).map((Book book) {
-                              return BookCard(book);
-                            }).toList(),
-                          ),
+                          const SizedBox(height: 10),
+                          MyDropdown(),
+                          if (snapshot.data![0] is Book)
+                            // Grid layout
+                            GridView.count(
+                                // Container pada card kita.
+                                primary: true,
+                                padding: const EdgeInsets.all(10),
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                crossAxisCount: 2,
+                                shrinkWrap: true,
+                                childAspectRatio: 0.55,
+                                children: (snapshot.data! as List<Book>)
+                                    .map((Book book) {
+                                  return BookCard(book);
+                                }).toList())
+                          else // Grid layout
+                            GridView.count(
+                                // Container pada card kita.
+                                primary: true,
+                                padding: const EdgeInsets.all(10),
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                crossAxisCount: 2,
+                                shrinkWrap: true,
+                                // childAspectRatio: 0.55,
+                                children: (snapshot.data! as List<Readlist>)
+                                    .map((Readlist readlist) {
+                                  return ReadlistCard(readlist);
+                                }).toList())
                         ],
                       ),
                     ),
