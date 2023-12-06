@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:project/main/screens/login.dart';
+import 'package:provider/provider.dart';
 
 class Option {
   final String name;
@@ -15,18 +18,43 @@ class OptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Material(
       color: option.color,
       borderRadius: BorderRadius.circular(30),
       child: InkWell(
         // Area responsive terhadap sentuhan
         // Navigate ke route yang sesuai (tergantung jenis tombol)
-        onTap: () {
+        onTap: () async {
           // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context) // test
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${option.name}!")));
+
+          // statement if sebelumnya
+          // tambahkan else if baru seperti di bawah ini
+          if (option.name == "Logout") {
+                  final response = await request.logout(
+                      "https://readnrate.adaptable.app/auth/logout/");
+                  String message = response["message"];
+                  usernameGlobal = null;
+                  if (response['status']) {
+                    String uname = response["username"];
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("$message Sampai jumpa, $uname."),
+                    ));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("$message"),
+                    ));
+                  }
+                }
+
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
