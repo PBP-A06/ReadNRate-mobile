@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:project/main/screens/book_list.dart';
+
 import 'package:project/home/screens/menu.dart';
+import 'package:project/leaderboard/screens/leaderboard_page.dart';
+import 'package:project/user_profile/screens/profile.dart';
+import 'package:project/main/screens/book_list.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:project/main/screens/register.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -116,6 +118,24 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const BooksPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.checklist,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Profile',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              // Route ke Profile
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ProfilePage()),
               );
             },
           ),
