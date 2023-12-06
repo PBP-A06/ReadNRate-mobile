@@ -1,9 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:project/book/models/book.dart';
 import 'package:project/home/widget/left_drawer.dart';
-import 'package:project/leaderboard/widget/leaderboard_card.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
