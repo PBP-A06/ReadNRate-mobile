@@ -1,62 +1,123 @@
 import 'package:flutter/material.dart';
-import 'package:project/book/models/book.dart'; // Make sure to import your Book model correctly
+import 'package:project/book/models/book.dart'; // Pastikan mengimpor model Book dengan benar
 
-class BookDetailPage extends StatelessWidget {
+class BookDetailPage extends StatefulWidget {
   final Book book;
 
-  // Add 'const' before the constructor to make it a constant constructor
   const BookDetailPage({Key? key, required this.book}) : super(key: key);
+
+  @override
+  _BookDetailPageState createState() => _BookDetailPageState();
+}
+
+class _BookDetailPageState extends State<BookDetailPage> {
+  bool _isReviewVisible = false; // Flag untuk mengatur visibilitas form review
+
+  void _toggleReviewForm() {
+    setState(() {
+      _isReviewVisible = !_isReviewVisible; // Mengganti status visibilitas
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Book Detail'),
-        backgroundColor:
-            Colors.grey[850], // Adjust the color to match the screenshot
+        backgroundColor: Colors.grey[850],
       ),
       body: Container(
-        color: Colors.black, // Background color
+        color: Colors.black,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              book.fields
-                  .imageLink, // This should be the URL to the book cover image
-              width: 150, // Set width for the image
-              height: 220, // Set height for the image
-              fit: BoxFit.cover, // Cover the bounds of the widget
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                book.fields.title, // Book title
-                style: const TextStyle(
-                  color: Colors.white, // Text color
-                  fontSize: 24, // Font size
-                  fontWeight: FontWeight.bold, // Font weight
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(
+                  widget.book.fields.imageLink, // URL ke gambar sampul buku
+                  width: 150, // Lebar gambar
+                  height: 220, // Tinggi gambar
+                  fit: BoxFit
+                      .cover, // Sesuaikan ukuran gambar dengan batas widget
                 ),
-              ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.book.fields.title, // Judul buku
+                          style: const TextStyle(
+                            color: Colors.white, // Warna teks
+                            fontSize: 24, // Ukuran font
+                            fontWeight: FontWeight.bold, // Berat font
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                  Icons.favorite), // Ikon berbentuk hati
+                              color: Colors.white,
+                              onPressed: () {}, // Fungsi untuk 'like'
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.bookmark),
+                              color: Colors.white,
+                              onPressed: () {}, // Fungsi untuk 'bookmark'
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white24, // Warna latar belakang kontainer
+                borderRadius:
+                    BorderRadius.circular(8), // Radius sudut kontainer
+              ),
               child: Text(
-                book.fields.bookDescription, // Book description
+                widget.book.fields.bookDescription, // Deskripsi buku
                 style: const TextStyle(
-                  color: Colors.white, // Text color
-                  fontSize: 16, // Font size
+                  color: Colors.white, // Warna teks
+                  fontSize: 16, // Ukuran font
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[800],
+              child: Center(
+                child: ElevatedButton(
+                  onPressed:
+                      _toggleReviewForm, // Memanggil fungsi untuk mengganti visibilitas form review
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color.fromARGB(255, 18, 40, 58),
+                  ),
+                  child: const Text('Review'),
                 ),
-                child: const Text('Review'),
               ),
             ),
+            if (_isReviewVisible) // Jika _isReviewVisible true, tampilkan form review
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    hintText: 'Write your review here...',
+                    fillColor: Colors.white,
+                    filled: true,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
