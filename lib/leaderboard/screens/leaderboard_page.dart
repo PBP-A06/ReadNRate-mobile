@@ -304,7 +304,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                 mainAxisSpacing: 10,
                                 crossAxisCount: 2,
                                 shrinkWrap: true,
-                                childAspectRatio: 0.55,
+                                childAspectRatio: 0.48,
                                 children: (snapshot.data! as List<Book>)
                                     .map((Book book) {
                                   return BookCard(book);
@@ -318,7 +318,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                 mainAxisSpacing: 10,
                                 crossAxisCount: 2,
                                 shrinkWrap: true,
-                                // childAspectRatio: 0.55,
+                                childAspectRatio: 1, // 1:1 card
                                 children: (snapshot.data! as List<Readlist>)
                                     .map((Readlist readlist) {
                                   return ReadlistCard(readlist);

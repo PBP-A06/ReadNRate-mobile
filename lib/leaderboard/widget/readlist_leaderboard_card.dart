@@ -19,17 +19,6 @@ class ReadlistCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: ClipRRect(
-                  // rounded image
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    // readlist.fields.books.first,
-                    "https://placehold.co/170x200/png",
-                    width: 125.0,
-                  ),
-                ),
-              ),
               const SizedBox(height: 5),
               Text(
                 "${readlist.fields.name}",

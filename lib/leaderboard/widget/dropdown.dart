@@ -126,14 +126,17 @@ class _MyDropdownState extends State<MyDropdown> {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Text(
-                    '"$selectedActualTitle" is currently ranked $selectedRank by rating.',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      // overflow: TextOverflow.ellipsis,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Text(
+                      '"$selectedActualTitle" is currently ranked $selectedRank by rating.',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        // overflow: TextOverflow.ellipsis,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 5),
                 ],
