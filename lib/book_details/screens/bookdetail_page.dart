@@ -80,43 +80,80 @@ class _BookDetailPageState extends State<BookDetailPage> {
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                color: Colors.white24, // Warna latar belakang kontainer
-                borderRadius:
-                    BorderRadius.circular(8), // Radius sudut kontainer
+                color: Colors.white24,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.white), // Menambahkan border
               ),
               child: Text(
-                widget.book.fields.bookDescription, // Deskripsi buku
+                widget.book.fields.bookDescription,
                 style: const TextStyle(
-                  color: Colors.white, // Warna teks
-                  fontSize: 16, // Ukuran font
+                  color: Colors.white,
+                  fontSize: 16,
                 ),
               ),
             ),
+
+            // Padding untuk tombol Review dengan container border
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24.0),
-              child: Center(
-                child: ElevatedButton(
-                  onPressed:
-                      _toggleReviewForm, // Memanggil fungsi untuk mengganti visibilitas form review
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: const Color.fromARGB(255, 18, 40, 58),
+              padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Colors.white)),
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: _toggleReviewForm,
+                    child: Text(
+                      'Review',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  child: const Text('Review'),
                 ),
               ),
             ),
-            if (_isReviewVisible) // Jika _isReviewVisible true, tampilkan form review
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextFormField(
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                    hintText: 'Write your review here...',
-                    fillColor: Colors.white,
-                    filled: true,
+
+            // Kondisi untuk menampilkan TextFormField dan TextButton Submit
+            if (_isReviewVisible)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextFormField(
+                      maxLines: 5,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Write your review here...',
+                        fillColor: Colors.grey,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        hintStyle:
+                            TextStyle(color: Colors.white.withOpacity(0.6)),
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0),
+                    child: TextButton(
+                      onPressed: () {
+                        // TODO: Implement submit review action
+                      },
+                      child: Text(
+                        'Submit Review',
+                        style: TextStyle(
+                          color: Colors.white,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
           ],
         ),
