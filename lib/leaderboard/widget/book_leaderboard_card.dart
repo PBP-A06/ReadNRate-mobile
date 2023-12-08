@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/book/models/book.dart';
+import 'package:project/book_details/screens/bookdetail_page.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
@@ -56,12 +57,11 @@ class BookCard extends StatelessWidget {
                   ),
                   // nanti redirect to details page di modul book_review
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => BookDetailsPage(
-                    //           book)),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BookDetailPage(book: book)),
+                    );
                   },
                   child: const Text(
                     "See Details",

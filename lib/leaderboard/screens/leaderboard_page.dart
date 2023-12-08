@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/book/models/book.dart';
-// import 'package:project/readlist/models/readlist.dart';
 import 'package:project/home/widget/left_drawer.dart';
 import 'package:project/leaderboard/widget/book_leaderboard_card.dart';
 import 'package:project/leaderboard/models/readlist.dart';
@@ -174,7 +173,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                       child: Column(
                         // Widget untuk menampilkan children secara vertikal
                         children: [
-                          // nanti sesuaikan berdasarkan button ayng diklik
+                          const SizedBox(height: 10),
                           Text(
                             titleText, // Top 10/100 by Rating/Likes/Readlist
                             textAlign: TextAlign.center,
@@ -183,9 +182,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(height: 5),
+                          const SizedBox(height: 10),
                           const Text(
-                            'Change to sort by?', // Text yang menandakan toko
+                            'Change to sort by?',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 15,
