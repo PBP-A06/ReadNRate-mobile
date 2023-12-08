@@ -16,9 +16,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text(
-          'ReadNRate Mobile',
-        ),
+        title: Image.asset(
+              'assets/logolong.png', // Replace with the actual path to your logo image
+              height: 40, // Adjust the height as needed
+            ),
+            centerTitle: true,
         backgroundColor: Colors.grey.shade800,
         foregroundColor: Colors.white,
       ),

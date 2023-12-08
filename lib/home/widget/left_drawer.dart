@@ -1,45 +1,76 @@
-import 'package:flutter/material.dart';
+
 import 'package:project/home/screens/menu.dart';
 import 'package:project/leaderboard/screens/leaderboard_page.dart';
 import 'package:project/user_profile/screens/profile.dart';
 import 'package:project/main/screens/book_list.dart';
+import 'package:project/main/screens/login.dart';
+import 'package:project/main/screens/register.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({super.key});
+// ignore: must_be_immutable
+class UserProfileWidget extends StatelessWidget {
+  String username;
+
+  UserProfileWidget({required this.username});
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: Colors.black,
-      child: ListView(
-        children: [
-          const DrawerHeader(
-            // Drawer header
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(66, 66, 66, 1),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  'ReadNRate',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(padding: EdgeInsets.all(10)),
-                Text("Welcome back to ReadNRate!\n Happy reading!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    )),
-              ],
+    return Row(
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(10),
+            child: CircleAvatar(
+              radius: 38,
+              backgroundImage: NetworkImage(
+                  'https://i.pinimg.com/550x/6e/c3/13/6ec313d108678bd6e33d5e6935c3099f.jpg'),
             ),
           ),
-          // Bagian routing
+        Text(
+          username,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class LeftDrawer extends StatelessWidget {
+  const LeftDrawer({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+    return Drawer(
+      backgroundColor: Color(0xFF2C343F),
+      child: ListView(
+        children: [
+          if (usernameGlobal != null) //USER IS LOGGED IN
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF2C343F),
+              ),
+              padding: EdgeInsets.all(0),
+              child: UserProfileWidget(username: usernameGlobal!), // Use ! to assert non-null
+            )
+          else //USER NOT LOGGED IN
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF2C343F),
+              ),
+              padding: EdgeInsets.all(0),
+              child: Container(
+                // Replace the placeholder below with your logo widget
+                child: Image.asset(
+                  'assets/logolong.png', // Replace with the path to your logo image
+                  height: 80, // Adjust the height as needed
+                ),
+              ),
+            ),
           ListTile(
             leading: const Icon(
               Icons.home_outlined,
@@ -49,16 +80,15 @@ class LeftDrawer extends StatelessWidget {
               'Home',
               style: TextStyle(color: Colors.white),
             ),
-            // Bagian redirection ke MyHomePage
             onTap: () {
               Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(),
+                ),
+              );
             },
           ),
-          //TODO: All Books masih routing ke book_list.dart !!!
           ListTile(
             leading: const Icon(
               Icons.checklist,
@@ -69,7 +99,6 @@ class LeftDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onTap: () {
-              // Route menu ke halaman produk
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const BooksPage()),
@@ -78,19 +107,17 @@ class LeftDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(
-              Icons.checklist,
+              Icons.library_books,
               color: Colors.white,
             ),
             title: const Text(
-              'Leaderboard',
+              'Readlists',
               style: TextStyle(color: Colors.white),
             ),
             onTap: () {
-              // Route ke leaderboard page
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const LeaderboardPage()),
+                MaterialPageRoute(builder: (context) => const BooksPage()),
               );
             },
           ),
@@ -112,17 +139,105 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.logout,
-              color: Colors.white,
+          if (usernameGlobal != null)
+            ListTile(
+              leading: const Icon(
+                Icons.bookmark,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Bookmarks',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BooksPage()),
+                );
+              },
             ),
-            title: const Text(
-              'Logout',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {},
-          ),
+            if (usernameGlobal != null)
+              ListTile(
+                leading: const Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Likes',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BooksPage()),
+                  );
+                },
+              ),
+            if (usernameGlobal != null)
+              ListTile(
+                leading: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                    final response = await request.logout(
+                        "https://readnrate.adaptable.app/auth/logout/");
+                    String message = response["message"];
+                    usernameGlobal = null;
+                    if (response['status']) {
+                      String uname = response["username"];
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message Sampai jumpa, $uname."),
+                      ));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message"),
+                      ));
+                    }
+                },
+              ),
+            if (usernameGlobal == null)
+              ListTile(
+                leading: const Icon(
+                  Icons.login,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Sign in',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+              ),
+            if (usernameGlobal == null)
+              ListTile(
+                leading: const Icon(
+                  Icons.person_add,
+                  color: Colors.white,
+                ),
+                title: const Text(
+                  'Register',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  );
+                },
+              ),
         ],
       ),
     );
