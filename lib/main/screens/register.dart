@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             // Background image
             Image.asset(
-              'assets/americanPsychoBookCover.webp', // Replace with your background image path
+              'assets/TheMemoryPolicebyYokoOgawa.webp', // Replace with your background image path
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,

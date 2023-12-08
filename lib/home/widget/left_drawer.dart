@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/home/screens/menu.dart';
+import 'package:project/leaderboard/screens/leaderboard_page.dart';
 import 'package:project/user_profile/screens/profile.dart';
 import 'package:project/main/screens/book_list.dart';
 import 'package:project/main/screens/login.dart';
@@ -19,7 +20,7 @@ class UserProfileWidget extends StatelessWidget {
     return Row(
       children: [
         const Padding(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(30),
             child: CircleAvatar(
               radius: 38,
               backgroundImage: NetworkImage(
@@ -91,6 +92,24 @@ class LeftDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(
+              Icons.leaderboard,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Leaderboard',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LeaderboardPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
               Icons.checklist,
               color: Colors.white,
             ),
@@ -121,24 +140,25 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.checklist,
-              color: Colors.white,
+          if (usernameGlobal != null)
+            ListTile(
+              leading: const Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Profile',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                // Route ke Profile
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfilePage()),
+                );
+              },
             ),
-            title: const Text(
-              'Profile',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              // Route ke Profile
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ProfilePage()),
-              );
-            },
-          ),
           if (usernameGlobal != null)
             ListTile(
               leading: const Icon(

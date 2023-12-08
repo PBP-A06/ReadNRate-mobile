@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/home/widget/left_drawer.dart';
-import 'package:project/home/widget/option_card.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
-
-  final List<Option> items = [
-    Option("Home", Icons.home_outlined, Colors.grey.shade900),
-    Option("All Books", Icons.checklist, Colors.grey.shade800),
-    Option("Logout", Icons.logout, Colors.grey.shade600),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +14,8 @@ class HomePage extends StatelessWidget {
               height: 40, // Adjust the height as needed
             ),
             centerTitle: true,
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: Colors.transparent, // Transparent
+        elevation: 0,                          // No shadow
         foregroundColor: Colors.white,
       ),
       drawer: const LeftDrawer(),
@@ -41,7 +35,7 @@ class HomePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 30,
-                      // fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
@@ -55,10 +49,6 @@ class HomePage extends StatelessWidget {
                   mainAxisSpacing: 10,
                   crossAxisCount: 3,
                   shrinkWrap: true,
-                  children: items.map((Option item) {
-                    // Iterasi untuk setiap item
-                    return OptionCard(item);
-                  }).toList(),
                 ),
               ],
             ),

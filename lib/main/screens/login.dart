@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 // Background image
                 Image.asset(
-                  'assets/20000LeaguesUnderTheSeaBookCover.jpg', // Replace with your background image path
+                  'assets/TheBesiegedCitybyClariceLispector.webp', // Replace with your background image path
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,

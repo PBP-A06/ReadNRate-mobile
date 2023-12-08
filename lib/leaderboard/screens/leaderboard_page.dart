@@ -142,8 +142,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           title: const Text('Leaderboard'),
-          backgroundColor: Colors.grey[800],
-          foregroundColor: Colors.white,
+        backgroundColor: Colors.transparent, // Transparent
+        elevation: 0,                          // No shadow
+        foregroundColor: Colors.white,
         ),
         // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
         drawer: const LeftDrawer(),
