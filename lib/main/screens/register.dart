@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:project/home/widget/left_drawer.dart';
 import 'package:provider/provider.dart';
@@ -96,59 +97,65 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: true,
                   ),
                   const SizedBox(height: 24.0),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.grey.shade700),
-                    ),
-                    onPressed: () async {
-                      String username = _usernameController.text;
-                      String password = _passwordController.text;
-                      String passwordConfirmation =
-                          _passwordConfirmationController.text;
+                    Container(
+                    margin: const EdgeInsets.only(top: 10, bottom: 15),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(const Color(0xFF00B021)),
+                      ),
+                      onPressed: () async {
+                        String username = _usernameController.text;
+                        String password = _passwordController.text;
+                        String passwordConfirmation =
+                            _passwordConfirmationController.text;
 
-                      final response = await request.postJson(
-                        "https://readnrate.adaptable.app/auth/register",
-                        // "http://localhost:8000/auth/register/",
-                        jsonEncode(<String, String>{
-                          'username': username,
-                          'password': password,
-                          'passwordConfirmation': passwordConfirmation,
-                        }),
-                      );
-
-                      if (response["status"] == "success") {
-                        Navigator.pop(context); // back to login page
-                        ScaffoldMessenger.of(context)
-                          ..hideCurrentSnackBar()
-                          ..showSnackBar(SnackBar(
-                              content: Text(
-                                  "Register berhasil! Akun $username sudah dapat digunakan.")));
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: const Text('Register Gagal'),
-                            content: Text(response['message']),
-                            actions: [
-                              TextButton(
-                                child: const Text('OK'),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          ),
+                        final response = await request.postJson(
+                          "https://readnrate.adaptable.app/auth/register",
+                          // "http://localhost:8000/auth/register/",
+                          jsonEncode(<String, String>{
+                            'username': username,
+                            'password': password,
+                            'passwordConfirmation': passwordConfirmation,
+                          }),
                         );
-                      }
-                      if (request.loggedIn) {
-                      } else {}
-                    },
-                    child: const Text(
-                      'Register',
-                      style: TextStyle(color: Colors.white),
+
+                        if (response["status"] == "success") {
+                          Navigator.pop(context); // back to login page
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(SnackBar(
+                                content: Text(
+                                    "Register berhasil! Akun $username sudah dapat digunakan.")));
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Register Gagal'),
+                              content: Text(response['message']),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        if (request.loggedIn) {
+                        } else {}
+                      },
+                      child: 
+                        Text(
+                          'GO',
+                          style: GoogleFonts.almarai(
+                            textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                          ),
+                        ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

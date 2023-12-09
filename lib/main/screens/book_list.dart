@@ -70,13 +70,6 @@ class _BooksPageState extends State<BooksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        appBar: AppBar(
-          title: const Text('Books'),
-          backgroundColor: Colors.grey[800],
-          foregroundColor: Colors.white,
-        ),
-        // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
-        drawer: const LeftDrawer(),
         body: FutureBuilder(
             future: fetchDataFunction(),
             builder: (context, AsyncSnapshot snapshot) {
