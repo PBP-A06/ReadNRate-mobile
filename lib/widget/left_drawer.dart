@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/leaderboard/screens/leaderboard_page.dart';
 import 'package:project/screens/book_list.dart';
 import 'package:project/screens/menu.dart';
+import 'package:project/screens/readlist_list.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -89,6 +90,25 @@ class LeftDrawer extends StatelessWidget {
               Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const LeaderboardPage()),
+              );
+            },
+          ),
+          ListTile(//READLIST
+            leading: const Icon(
+              Icons.checklist,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Readlists',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              // TODO: Route ke Readlist page
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ReadlistPage()),
               );
             },
           ),
