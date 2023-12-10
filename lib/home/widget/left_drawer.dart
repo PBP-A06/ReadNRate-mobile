@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/home/screens/menu.dart';
 import 'package:project/leaderboard/screens/leaderboard_page.dart';
-import 'package:project/screens/book_list.dart';
-import 'package:project/screens/menu.dart';
+import 'package:project/main/screens/book_list.dart';
 import 'package:project/screens/readlist_list.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -71,8 +71,26 @@ class LeftDrawer extends StatelessWidget {
             onTap: () {
               // Route menu ke halaman produk
               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const BooksPage()),
+                context,
+                MaterialPageRoute(builder: (context) => const BooksPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.checklist,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Leaderboard',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              // Route ke leaderboard page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const LeaderboardPage()),
               );
             },
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/widget/left_drawer.dart';
-import 'package:project/widget/option_card.dart';
+import 'package:project/home/widget/left_drawer.dart';
+import 'package:project/home/widget/option_card.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
