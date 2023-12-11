@@ -17,7 +17,7 @@ class ReadlistPage extends StatefulWidget {
 class _ReadlistPageState extends State<ReadlistPage> {
   Future<List<Readlist>> fetchProduct() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-    var url = Uri.parse('http://127.0.0.1:8000/readlist/get-readlists/');
+    var url = Uri.parse('https://readnrate.adaptable.app/readlist/get-readlists/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -79,13 +79,17 @@ class _ReadlistPageState extends State<ReadlistPage> {
                                   style: const TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text("${snapshot.data![index].fields.price}"),
+                                Text("${snapshot.data![index].fields.likes}",
+                                style: const TextStyle(color: Colors.white),),
                                 const SizedBox(height: 10),
                                 Text(
-                                    "${snapshot.data![index].fields.description}")
+                                    "${snapshot.data![index].fields.description}",
+                                  style: const TextStyle(color: Colors.white),
+                                )
                               ],
                             ),
                           ));

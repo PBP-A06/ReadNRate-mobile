@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project/home/screens/menu.dart';
 import 'package:project/leaderboard/screens/leaderboard_page.dart';
 import 'package:project/main/screens/book_list.dart';
-import 'package:project/screens/readlist_list.dart';
+import 'package:project/readlist/screens/readlist_list.dart';
+
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
