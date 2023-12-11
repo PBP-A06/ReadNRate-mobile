@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/home/widget/left_drawer.dart';
+import 'package:project/leaderboard/widget/dropdown.dart';
+import 'package:project/leaderboard/widget/readlist_leaderboard_card.dart';
 import 'dart:convert';
 
-import 'package:project/readlist/screens/models/readlist.dart';
+import 'package:project/leaderboard/models/readlist.dart';
 
 
 
@@ -15,7 +17,8 @@ class ReadlistPage extends StatefulWidget {
 }
 
 class _ReadlistPageState extends State<ReadlistPage> {
-  Future<List<Readlist>> fetchProduct() async {
+  
+  Future<List<Readlist>> fetchReadlists() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var url = Uri.parse('https://readnrate.adaptable.app/readlist/get-readlists/');
     var response = await http.get(
@@ -42,12 +45,14 @@ class _ReadlistPageState extends State<ReadlistPage> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           title: const Text('Readlists'),
-          backgroundColor: Colors.grey[800],
+          backgroundColor: Colors.transparent, // Transparent
+          elevation: 0, // No shadow
           foregroundColor: Colors.white,
         ),
+        // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
         drawer: const LeftDrawer(),
         body: FutureBuilder(
-            future: fetchProduct(),
+            future: fetchReadlists(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
@@ -56,7 +61,7 @@ class _ReadlistPageState extends State<ReadlistPage> {
                   return const Column(
                     children: [
                       Text(
-                        "Tidak ada data produk.",
+                        "Belum ada data.",
                         style:
                             TextStyle(color: Color(0xff59A5D8), fontSize: 20),
                       ),
@@ -64,35 +69,36 @@ class _ReadlistPageState extends State<ReadlistPage> {
                     ],
                   );
                 } else {
-                  return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (_, index) => Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 12),
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${snapshot.data![index].fields.name}",
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text("${snapshot.data![index].fields.likes}",
-                                style: const TextStyle(color: Colors.white),),
-                                const SizedBox(height: 10),
-                                Text(
-                                    "${snapshot.data![index].fields.description}",
-                                  style: const TextStyle(color: Colors.white),
-                                )
-                              ],
-                            ),
-                          ));
+                  return SingleChildScrollView(
+                    // Widget wrapper yang dapat discroll
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.all(5), // Set padding dari halaman
+                      child: Column(
+                        // Widget untuk menampilkan children secara vertikal
+                        children: [
+                          
+                          
+                          const SizedBox(height: 10),
+                          
+                          // Grid layout
+                            GridView.count(
+                                // Container pada card kita.
+                                primary: true,
+                                padding: const EdgeInsets.all(10),
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                crossAxisCount: 2,
+                                shrinkWrap: true,
+                                childAspectRatio: 1, // 1:1 card
+                                children: (snapshot.data! as List<Readlist>)
+                                    .map((Readlist readlist) {
+                                  return ReadlistCard(readlist);
+                                }).toList())
+                        ],
+                      ),
+                    ),
+                  );
                 }
               }
             }));

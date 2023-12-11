@@ -158,30 +158,30 @@ class LeftDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const BooksPage()),
+                MaterialPageRoute(builder: (context) => const ReadlistPage()),
               );
             },
           ),
-          if (usernameGlobal != null)
-          ListTile(//READLIST
-            leading: const Icon(
-              Icons.checklist,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Readlists',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              // TODO: Route ke Readlist page
+          // if (usernameGlobal != null)
+          // ListTile(//READLIST
+          //   leading: const Icon(
+          //     Icons.checklist,
+          //     color: Colors.white,
+          //   ),
+          //   title: const Text(
+          //     'Readlists',
+          //     style: TextStyle(color: Colors.white),
+          //   ),
+          //   onTap: () {
+          //     // TODO: Route ke Readlist page
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ReadlistPage()),
-              );
-            },
-          ),
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => const ReadlistPage()),
+          //     );
+          //   },
+          // ),
           
           if (usernameGlobal != null)
             ListTile(
