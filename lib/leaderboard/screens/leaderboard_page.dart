@@ -141,9 +141,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           title: const Text('Leaderboard'),
-        backgroundColor: Colors.transparent, // Transparent
-        elevation: 0,                          // No shadow
-        foregroundColor: Colors.white,
+          backgroundColor: Colors.transparent, // Transparent
+          elevation: 0, // No shadow
+          foregroundColor: Colors.white,
         ),
         // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
         drawer: const LeftDrawer(),
@@ -166,12 +166,10 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                   );
                 } else {
                   return SingleChildScrollView(
-                    // Widget wrapper yang dapat discroll
+                    physics: AlwaysScrollableScrollPhysics(),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.all(5), // Set padding dari halaman
+                      padding: const EdgeInsets.all(5),
                       child: Column(
-                        // Widget untuk menampilkan children secara vertikal
                         children: [
                           const SizedBox(height: 10),
                           Text(
@@ -295,30 +293,30 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                           const SizedBox(height: 10),
                           MyDropdown(),
                           if (snapshot.data![0] is Book)
-                            // Grid layout
                             GridView.count(
-                                // Container pada card kita.
+                              primary: true,
+                              padding: const EdgeInsets.all(10),
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              crossAxisCount: 2,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              childAspectRatio: 0.48,
+                              children: (snapshot.data! as List<Book>)
+                                  .map((Book book) {
+                                return BookCard(book);
+                              }).toList(),
+                            )
+                          else
+                            GridView.count(
                                 primary: true,
                                 padding: const EdgeInsets.all(10),
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10,
                                 crossAxisCount: 2,
                                 shrinkWrap: true,
-                                childAspectRatio: 0.48,
-                                children: (snapshot.data! as List<Book>)
-                                    .map((Book book) {
-                                  return BookCard(book);
-                                }).toList())
-                          else // Grid layout
-                            GridView.count(
-                                // Container pada card kita.
-                                primary: true,
-                                padding: const EdgeInsets.all(10),
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10,
-                                crossAxisCount: 2,
-                                shrinkWrap: true,
-                                childAspectRatio: 1, // 1:1 card
+                                physics: const NeverScrollableScrollPhysics(),
+                                childAspectRatio: 1,
                                 children: (snapshot.data! as List<Readlist>)
                                     .map((Readlist readlist) {
                                   return ReadlistCard(readlist);
