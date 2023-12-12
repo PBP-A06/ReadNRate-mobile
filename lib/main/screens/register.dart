@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:project/home/screens/menu.dart';
 import 'package:project/home/widget/left_drawer.dart';
+import 'package:project/main/screens/login.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -15,8 +17,21 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController =
-      TextEditingController();
+  final TextEditingController _passwordConfirmationController = TextEditingController();
+
+  // Toggles the password show status
+  bool _obscureText1 = true;
+  bool _obscureText2 = true;
+  void _toggleObscured1() {
+    setState(() {
+      _obscureText1 = !_obscureText1;
+    });
+  }
+  void _toggleObscured2() {
+    setState(() {
+      _obscureText2 = !_obscureText2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 10.0),
                   TextField(
                     controller: _usernameController,
@@ -76,26 +92,53 @@ class _RegisterPageState extends State<RegisterPage> {
                       labelText: "Username",
                     ),
                   ),
+
                   const SizedBox(height: 12.0),
                   TextField(
                     controller: _passwordController,
                     style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
+                    obscureText: _obscureText1,
+                    decoration: InputDecoration(
                       labelText: 'Password',
-                      labelStyle: TextStyle(color:Color(0xFF556678)),
+                      labelStyle: const TextStyle(color:Color(0xFF556678)),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                        child: GestureDetector(
+                          onTap: _toggleObscured1,
+                          child: Icon(
+                            _obscureText1
+                                ? Icons.visibility_rounded
+                                : Icons.visibility_off_rounded,
+                            size: 24,
+                          ),
+                        ),
+                      ),
                     ),
-                    obscureText: true,
                   ),
+                  
                   const SizedBox(height: 12.0),
                   TextField(
                     controller: _passwordConfirmationController,
                     style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
+                    obscureText: _obscureText2,
+                    decoration: InputDecoration(
                       labelText: 'Confirm your Password',
-                      labelStyle: TextStyle(color:Color(0xFF556678)),
+                      labelStyle: const TextStyle(color:Color(0xFF556678)),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                        child: GestureDetector(
+                          onTap: _toggleObscured2,
+                          child: Icon(
+                            _obscureText2
+                                ? Icons.visibility_rounded
+                                : Icons.visibility_off_rounded,
+                            size: 24,
+                          ),
+                        ),
+                      ),
                     ),
-                    obscureText: true,
                   ),
+
                   const SizedBox(height: 24.0),
                     Container(
                     margin: const EdgeInsets.only(top: 10, bottom: 15),
@@ -105,6 +148,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             MaterialStateProperty.all<Color>(const Color(0xFF00B021)),
                       ),
                       onPressed: () async {
+
+                        showDialog(
+                          context: context, 
+                          builder: (context) {
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                        );
+
                         String username = _usernameController.text;
                         String password = _passwordController.text;
                         String passwordConfirmation =
@@ -112,26 +163,37 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         final response = await request.postJson(
                           "https://readnrate.adaptable.app/auth/register",
-                          // "http://localhost:8000/auth/register/",
+                          // "http://127.0.0.1:8000/auth/register/",
                           jsonEncode(<String, String>{
                             'username': username,
                             'password': password,
                             'passwordConfirmation': passwordConfirmation,
                           }),
-                        );
+                        ); 
 
                         if (response["status"] == "success") {
                           Navigator.pop(context); // back to login page
+                          usernameGlobal = username;
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(SnackBar(
                                 content: Text(
                                     "Register berhasil! Akun $username sudah dapat digunakan.")));
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                          
                         } else {
+                          Navigator.pop(context);
+                          _passwordController.clear();
+                          _passwordConfirmationController.clear();
+
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('Register Gagal'),
+                              title: const Text('Register Failed'),
                               content: Text(response['message']),
                               actions: [
                                 TextButton(
@@ -144,8 +206,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           );
                         }
-                        if (request.loggedIn) {
-                        } else {}
                       },
                       child: 
                         Text(

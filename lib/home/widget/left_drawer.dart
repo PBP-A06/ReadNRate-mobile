@@ -169,6 +169,15 @@ class LeftDrawer extends StatelessWidget {
                   alignment: Alignment.center,
                   child: ElevatedButton(
                   onPressed: () async {
+
+                    // Show loading dialog
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    );
+
                     final response = await request
                         .logout("https://readnrate.adaptable.app/auth/logout/");
                     String message = response["message"];

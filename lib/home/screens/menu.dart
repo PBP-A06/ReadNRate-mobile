@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
                 height: 40,             
               ),
               centerTitle: true,
-          backgroundColor: Color(0xFF2C343F), 
+          backgroundColor: Color(0xFF14171C), 
           foregroundColor: Colors.white,
           elevation: 0,                         
           bottom: TabBar(
@@ -29,19 +29,19 @@ class HomePage extends StatelessWidget {
             tabs: const <Widget>[
               Tab(
                 icon: Icon(Icons.newspaper),
-                text: "Feeds",
+                // text: "FEEDS",
               ),
               Tab(
                 icon: Icon(Icons.leaderboard),
-                text: "Leaderboard",
+                // text: "LEADERBOARD",
               ),
               Tab(
                 icon: Icon(Icons.local_library),
-                text: "All Books",
+                // text: "BOOKS",
               ),
               Tab(
                 icon: Icon(Icons.checklist),
-                text: "Readlists",
+                // text: "READLISTS",
               ),
             ],
           ),

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/book/models/book.dart';
-import 'package:project/home/widget/left_drawer.dart';
 import 'package:project/leaderboard/widget/book_leaderboard_card.dart';
 
 class BooksPage extends StatefulWidget {

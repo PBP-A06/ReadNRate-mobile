@@ -15,9 +15,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-    
     final TextEditingController _usernameController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
+
+  // Toggles the password show status
+  bool _obscureText1 = true;
+  void _toggleObscured1() {
+    setState(() {
+      _obscureText1 = !_obscureText1;
+    });
+  }
 
     @override
     Widget build(BuildContext context) {
@@ -81,11 +88,24 @@ class _LoginPageState extends State<LoginPage> {
                           TextField(
                               controller: _passwordController,
                               style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
+                              obscureText: _obscureText1,
+                              decoration: InputDecoration(
                                   labelText: 'Password',
-                                  labelStyle: TextStyle(color:Color(0xFF556678)),
+                                  labelStyle: const TextStyle(color:Color(0xFF556678)),
+                                  suffixIcon: Padding(
+                                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                    child: GestureDetector(
+                                      onTap: _toggleObscured1,
+                                      child: Icon(
+                                        _obscureText1
+                                            ? Icons.visibility_rounded
+                                            : Icons.visibility_off_rounded,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  ),
                               ),
-                              obscureText: true,
+                              
                           ),
                           const SizedBox(height: 24.0),
                           
@@ -102,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF00B021), 
+                                    backgroundColor: const Color(0xFFF27405)
                                   ),
                                   child: Text(
                                     'JOIN US',
@@ -117,6 +137,14 @@ class _LoginPageState extends State<LoginPage> {
                                 margin: const EdgeInsets.only(left: 20, top: 10, bottom: 15),
                                 child: ElevatedButton(
                                     onPressed: () async {
+                                      
+                                      showDialog(
+                                        context: context, 
+                                        builder: (context) {
+                                          return Center(child: CircularProgressIndicator());
+                                        }
+                                      );
+
                                         String username = _usernameController.text;
                                         String password = _passwordController.text;
 
@@ -141,26 +169,29 @@ class _LoginPageState extends State<LoginPage> {
                                                 ..showSnackBar(
                                                     SnackBar(content: Text("$message Welcome, $uname.")));
                                             } else {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) => AlertDialog(
-                                                    title: const Text('Login Failed'),
-                                                    content:
-                                                        Text(response['message']),
-                                                    actions: [
-                                                        TextButton(
-                                                            child: const Text('OK'),
-                                                            onPressed: () {
-                                                                Navigator.pop(context);
-                                                            },
-                                                        ),
-                                                    ],
-                                                ),
-                                            );
+                                              Navigator.pop(context); 
+
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) => AlertDialog(
+                                                      title: const Text('Login Failed'),
+                                                      content:
+                                                          Text(response['message']),
+                                                      actions: [
+                                                          TextButton(
+                                                              child: const Text('OK'),
+                                                              onPressed: () {
+                                                                  Navigator.pop(context);
+                                                                  _passwordController.clear();
+                                                              },
+                                                          ),
+                                                      ],
+                                                  ),
+                                              );
                                         }
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF556678), 
+                                      backgroundColor: const Color(0xFF00B021),  
                                     ),
                                     child: Text(
                                       'LOG IN',
