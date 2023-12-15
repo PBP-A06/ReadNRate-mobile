@@ -1,7 +1,9 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project/home/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:project/home/widget/left_drawer.dart';
+import 'package:project/main/screens/register.dart';
 import 'package:provider/provider.dart';
 String? usernameGlobal;
 
@@ -13,9 +15,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-    
     final TextEditingController _usernameController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
+
+  // Toggles the password show status
+  bool _obscureText1 = true;
+  void _toggleObscured1() {
+    setState(() {
+      _obscureText1 = !_obscureText1;
+    });
+  }
 
     @override
     Widget build(BuildContext context) {
@@ -34,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 // Background image
                 Image.asset(
-                  'assets/20000LeaguesUnderTheSeaBookCover.jpg', // Replace with your background image path
+                  'assets/TheBesiegedCitybyClariceLispector.webp', // Replace with your background image path
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
@@ -79,59 +88,121 @@ class _LoginPageState extends State<LoginPage> {
                           TextField(
                               controller: _passwordController,
                               style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
+                              obscureText: _obscureText1,
+                              decoration: InputDecoration(
                                   labelText: 'Password',
-                                  labelStyle: TextStyle(color:Color(0xFF556678)),
+                                  labelStyle: const TextStyle(color:Color(0xFF556678)),
+                                  suffixIcon: Padding(
+                                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                    child: GestureDetector(
+                                      onTap: _toggleObscured1,
+                                      child: Icon(
+                                        _obscureText1
+                                            ? Icons.visibility_rounded
+                                            : Icons.visibility_off_rounded,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  ),
                               ),
-                              obscureText: true,
+                              
                           ),
                           const SizedBox(height: 24.0),
-                          ElevatedButton(
-                              onPressed: () async {
-                                  String username = _usernameController.text;
-                                  String password = _passwordController.text;
+                          
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(right: 20, top: 10, bottom: 15),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const RegisterPage()),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFFF27405)
+                                  ),
+                                  child: Text(
+                                    'JOIN US',
+                                    style: GoogleFonts.almarai(
+                                      textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                                    ),
+                                  )
+                                ),
+                              ),
 
-                                  // Cek kredensial
-                                  // Untuk menyambungkan Android emulator dengan Django pada localhost,
-                                  // gunakan URL http://10.0.2.2/
-                                  final response = await request.login("https://readnrate.adaptable.app//auth/login/", {
-                                  'username': username,
-                                  'password': password,
-                                  });
-                      
-                                  if (request.loggedIn) {
-                                      String message = response['message'];
-                                      String uname = response['username'];
-                                      usernameGlobal = response['username'];
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => HomePage()),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          ..hideCurrentSnackBar()
-                                          ..showSnackBar(
-                                              SnackBar(content: Text("$message Welcome, $uname.")));
-                                      } else {
+                              Container(
+                                margin: const EdgeInsets.only(left: 20, top: 10, bottom: 15),
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      
                                       showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                              title: const Text('Login Failed'),
-                                              content:
-                                                  Text(response['message']),
-                                              actions: [
-                                                  TextButton(
-                                                      child: const Text('OK'),
-                                                      onPressed: () {
-                                                          Navigator.pop(context);
-                                                      },
-                                                  ),
-                                              ],
-                                          ),
+                                        context: context, 
+                                        builder: (context) {
+                                          return Center(child: CircularProgressIndicator());
+                                        }
                                       );
-                                  }
-                              },
-                              child: const Text('Login'),
-                            ),
+
+                                        String username = _usernameController.text;
+                                        String password = _passwordController.text;
+
+                                        // Cek kredensial
+                                        // Untuk menyambungkan Android emulator dengan Django pada localhost,
+                                        // gunakan URL http://10.0.2.2/
+                                        final response = await request.login("https://readnrate.adaptable.app//auth/login/", {
+                                        'username': username,
+                                        'password': password,
+                                        });
+                            
+                                        if (request.loggedIn) {
+                                            String message = response['message'];
+                                            String uname = response['username'];
+                                            usernameGlobal = response['username'];
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => HomePage()),
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                ..hideCurrentSnackBar()
+                                                ..showSnackBar(
+                                                    SnackBar(content: Text("$message Welcome, $uname.")));
+                                            } else {
+                                              Navigator.pop(context); 
+
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) => AlertDialog(
+                                                      title: const Text('Login Failed'),
+                                                      content:
+                                                          Text(response['message']),
+                                                      actions: [
+                                                          TextButton(
+                                                              child: const Text('OK'),
+                                                              onPressed: () {
+                                                                  Navigator.pop(context);
+                                                                  _passwordController.clear();
+                                                              },
+                                                          ),
+                                                      ],
+                                                  ),
+                                              );
+                                        }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF00B021),  
+                                    ),
+                                    child: Text(
+                                      'LOG IN',
+                                      style: GoogleFonts.almarai(
+                                        textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                                      ),
+                                    )
+                                  ),
+                              )
+                            ],
+                          )
                         ],
                     ),
                   ),
