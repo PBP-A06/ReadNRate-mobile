@@ -14,6 +14,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   bool _isReviewVisible = false;
   bool _isLiked = false;
   bool _isBookmarked = false;
+  int _likeCount = 0;
   final TextEditingController _reviewController = TextEditingController();
   final List<Map<String, String>> _reviews = [];
 
@@ -26,6 +27,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   void _toggleLike() {
     setState(() {
       _isLiked = !_isLiked;
+      _likeCount += _isLiked ? 1 : -1;
     });
   }
 
@@ -56,8 +58,21 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    double cmToPixels(double cm) =>
-        cm * 38.8; // Adjust the multiplier according to your screen's dpi
+    Size screenSize = MediaQuery.of(context).size;
+    double screenWidth = screenSize.width;
+    double screenHeight = screenSize.height;
+
+    // Adjusted the proportions
+    double imageWidth =
+        screenWidth * 0.35; // Reduced the width to 35% of the screen width
+    double imageHeight =
+        imageWidth * 1.5; // Maintaining aspect ratio of the image
+    double outerPadding =
+        screenWidth * 0.04; // Increased padding to 4% of the screen width
+    double innerSpace =
+        screenHeight * 0.01; // Adjusted space to 1% of the screen height
+    double descriptionFontSize =
+        screenWidth * 0.033; // Reduced font size for the description
 
     return Scaffold(
       appBar: AppBar(
@@ -69,32 +84,33 @@ class _BookDetailPageState extends State<BookDetailPage> {
         child: Container(
           color: Colors.black,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: cmToPixels(1)),
+            padding: EdgeInsets.symmetric(horizontal: outerPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: cmToPixels(1)),
+                SizedBox(height: innerSpace),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image.network(
                       widget.book.fields.imageLink,
-                      width: cmToPixels(7),
-                      height: cmToPixels(10),
-                      fit: BoxFit.cover,
+                      width: imageWidth,
+                      height: imageHeight,
+                      fit: BoxFit.contain,
                     ),
-                    SizedBox(width: cmToPixels(1)),
+                    SizedBox(width: outerPadding),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(top: cmToPixels(1)),
+                        padding: EdgeInsets.only(top: innerSpace),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               widget.book.fields.title,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize:
+                                    screenWidth * 0.05, // Adjusted font size
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -107,6 +123,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                       : Icons.favorite_border),
                                   color: _isLiked ? Colors.red : Colors.white,
                                   onPressed: _toggleLike,
+                                ),
+                                Text(
+                                  '$_likeCount',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                                 IconButton(
                                   icon: Icon(_isBookmarked
@@ -125,10 +145,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: cmToPixels(1)),
+                SizedBox(height: innerSpace),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                  padding: const EdgeInsets.all(16.0),
+                  margin: EdgeInsets.symmetric(vertical: innerSpace),
+                  padding: EdgeInsets.all(innerSpace),
                   decoration: BoxDecoration(
                     color: Colors.white24,
                     borderRadius: BorderRadius.circular(8),
@@ -136,31 +156,39 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                   child: Text(
                     widget.book.fields.bookDescription,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: descriptionFontSize,
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.white)),
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
-                        onPressed: _toggleReviewForm,
-                        child: Text(
-                          'Review',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.white,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border:
+                                Border(bottom: BorderSide(color: Colors.white)),
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton(
+                              onPressed: _toggleReviewForm,
+                              child: Text(
+                                'Review',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      Icon(Icons.chat_bubble_outline, color: Colors.white),
+                    ],
                   ),
                 ),
                 if (_isReviewVisible)
@@ -205,19 +233,40 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     ),
                   ),
                 ..._reviews
-                    .map((review) => ListTile(
-                          title: Text(
-                            review['username']!,
-                            style: TextStyle(color: Colors.white),
+                    .map((review) => Container(
+                          margin: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.only(
+                            top: 8.0,
+                            bottom: 8.0,
+                            left: 16.0,
+                            right: 16.0,
                           ),
-                          subtitle: Text(
-                            review['review']!,
-                            style: TextStyle(color: Colors.grey),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850], // Changed to a gray color
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25.0)),
+                            border: Border.all(color: Colors.grey[300]!),
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              review['username']!,
+                              style: TextStyle(
+                                color:
+                                    Colors.white, // Text color changed to white
+                                fontWeight:
+                                    FontWeight.bold, // Make the username bold
+                                fontSize: 16.0, // Increase the font size
+                              ),
+                            ),
+                            subtitle: Text(
+                              review['review']!,
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(0.7)),
+                            ),
                           ),
                         ))
                     .toList(),
-                SizedBox(
-                    height: 50), // Add more space at the bottom of the page
+                SizedBox(height: 50),
               ],
             ),
           ),
