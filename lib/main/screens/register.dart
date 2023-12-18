@@ -162,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             _passwordConfirmationController.text;
 
                         final response = await request.postJson(
-                          "https://readnrate.adaptable.app/auth/register",
+                          "https://readnrate.adaptable.app/auth/register/",
                           // "http://127.0.0.1:8000/auth/register/",
                           jsonEncode(<String, String>{
                             'username': username,

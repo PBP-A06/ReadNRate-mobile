@@ -62,9 +62,9 @@ class LeftDrawer extends StatelessWidget {
               child: DrawerHeader(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/a_ap-mob-cozy-tapes-vol-2-too-cozy-Cover-Art.jpg'), 
+                    image: NetworkImage('https://upload.wikimedia.org/wikipedia/en/1/14/Inrainbowscover.png'), 
                     fit: BoxFit.cover,
-                    opacity: 0.15,
+                    opacity: 0.3,
                     ),
                 ),
                 padding: const EdgeInsets.all(0),
@@ -143,9 +143,12 @@ class LeftDrawer extends StatelessWidget {
                 Icons.bookmark,
                 color: Colors.white,
               ),
-              title: const Text(
-                'Bookmarks',
-                style: TextStyle(color: Colors.white),
+              title: const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Bookmarks',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               onTap: () {
               },
@@ -156,9 +159,12 @@ class LeftDrawer extends StatelessWidget {
                 Icons.favorite,
                 color: Colors.white,
               ),
-              title: const Text(
-                'Likes',
-                style: TextStyle(color: Colors.white),
+              title: const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Likes',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               onTap: () {
               },

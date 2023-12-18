@@ -20,12 +20,13 @@ class HomePage extends StatelessWidget {
                 height: 40,             
               ),
               centerTitle: true,
-          backgroundColor: Color(0xFF14171C), 
+          backgroundColor: const Color(0xFF14171C), 
           foregroundColor: Colors.white,
           elevation: 0,                         
           bottom: TabBar(
             unselectedLabelColor: Colors.blueGrey[500],
             labelColor: Colors.white,
+            dividerColor: Colors.transparent,
             tabs: const <Widget>[
               Tab(
                 icon: Icon(Icons.newspaper),
