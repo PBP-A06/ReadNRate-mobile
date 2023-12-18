@@ -1,9 +1,3 @@
-import 'dart:convert';
-
-Review reviewFromJson(String str) => Review.fromJson(json.decode(str));
-
-String reviewToJson(Review data) => json.encode(data.toJson());
-
 class Review {
   String username;
   String reviewText;
@@ -13,10 +7,15 @@ class Review {
     required this.reviewText,
   });
 
-  factory Review.fromJson(Map<String, dynamic> json) => Review(
-        username: json["username"],
-        reviewText: json["review_text"],
-      );
+  factory Review.fromJson(Map<String, dynamic> json) {
+    String username = json["username"] ?? 'Anonymous';
+    String reviewText = json["review_text"] ?? 'No review text provided';
+
+    return Review(
+      username: username,
+      reviewText: reviewText,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "username": username,

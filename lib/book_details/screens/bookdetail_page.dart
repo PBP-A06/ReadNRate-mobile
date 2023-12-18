@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'dart:convert';
 import 'package:project/book/models/book.dart';
+import 'package:project/book_details/models/book_review.dart';
+import 'package:project/main/screens/login.dart';
+import 'package:provider/provider.dart';
+
+/*
+To Do :
+1. Benerin like dan bookmark, harus tetep ada sesuai usernya walaupun udah pindah halaman/logout
+2. Benerin Null & String di review
+3. Tambahin snackbar klo mencet like dan bookmark tp belom login
+*/
 
 class BookDetailPage extends StatefulWidget {
   final Book book;
@@ -16,37 +29,209 @@ class _BookDetailPageState extends State<BookDetailPage> {
   bool _isBookmarked = false;
   int _likeCount = 0;
   final TextEditingController _reviewController = TextEditingController();
-  final List<Map<String, String>> _reviews = [];
+  List<Review> _reviews = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (isLoggedIn()) {
+      _fetchLikeStatus();
+      _fetchBookmarkStatus();
+    } else {
+      _fetchLikeCount();
+    }
+    _fetchReviews();
+  }
+
+  Future<void> _fetchReviews() async {
+    String bookId = widget.book.pk.toString();
+    var url = 'https://readnrate.adaptable.app/get_reviews/$bookId/';
+    try {
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        List<dynamic> reviewsJson = json.decode(response.body.trim());
+        setState(() {
+          _reviews = reviewsJson.map((json) => Review.fromJson(json)).toList();
+        });
+      } else {
+        print('Failed to load reviews: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching reviews: $e');
+    }
+  }
+
+  Future<void> _fetchLikeStatus() async {
+    final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
+    await cookieRequest.init();
+
+    String bookId = widget.book.pk.toString();
+    var url = 'https://readnrate.adaptable.app/get_like_status/$bookId/';
+
+    try {
+      var response = await cookieRequest.get(url);
+      if (response['is_liked'] != null) {
+        setState(() {
+          _isLiked = response['is_liked'];
+          _likeCount = response['like_count'];
+        });
+      }
+    } catch (e) {
+      print('Error fetching like status: $e');
+    }
+  }
+
+  Future<void> _fetchBookmarkStatus() async {
+    final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
+    if (!cookieRequest.initialized) await cookieRequest.init();
+
+    if (!cookieRequest.loggedIn) {
+      _fetchLikeCount();
+      return;
+    }
+
+    String bookId = widget.book.pk.toString();
+    var url = 'https://readnrate.adaptable.app/get_bookmark_status/$bookId/';
+
+    try {
+      var response = await cookieRequest.get(url);
+      if (response['is_bookmarked'] != null) {
+        setState(() {
+          _isBookmarked = response['is_bookmarked'];
+        });
+      }
+    } catch (e) {
+      print('Error fetching bookmark status: $e');
+    }
+  }
+
+  Future<void> _fetchLikeCount() async {
+    String bookId = widget.book.pk.toString();
+    var url = 'https://readnrate.adaptable.app/get_like_count/$bookId/';
+
+    try {
+      var response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.body);
+        setState(() {
+          _likeCount = responseData['like_count'];
+        });
+      }
+    } catch (e) {
+      print('Error fetching like count: $e');
+    }
+  }
+
+  bool isLoggedIn() {
+    return usernameGlobal != null;
+  }
+
+  String getCurrentLoggedInUsername() {
+    return usernameGlobal ?? '';
+  }
 
   void _toggleReviewForm() {
+    final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
+    if (!cookieRequest.loggedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please log in to write a review.')),
+      );
+      return;
+    }
+
     setState(() {
       _isReviewVisible = !_isReviewVisible;
     });
   }
 
-  void _toggleLike() {
-    setState(() {
-      _isLiked = !_isLiked;
-      _likeCount += _isLiked ? 1 : -1;
-    });
-  }
+  Future<void> _toggleLike() async {
+    final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
+    if (!cookieRequest.loggedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please log in to like the book.')),
+      );
+      return;
+    }
+    await cookieRequest.init();
 
-  void _toggleBookmark() {
-    setState(() {
-      _isBookmarked = !_isBookmarked;
-    });
-  }
+    String bookId = widget.book.pk.toString();
+    var url = 'https://readnrate.adaptable.app/toggle_like/$bookId/';
 
-  void _submitReview() {
-    if (_reviewController.text.isNotEmpty) {
-      setState(() {
-        _reviews.add({
-          'username': 'xx', // Temporary username
-          'review': _reviewController.text,
+    try {
+      var response = await cookieRequest.postJson(
+        url,
+        jsonEncode({}),
+      );
+
+      if (response['status'] == 'success') {
+        setState(() {
+          _isLiked = !_isLiked;
+          _likeCount = response['total_likes'];
         });
+      }
+    } catch (e) {
+      print('Error toggling like: $e');
+    }
+  }
+
+  Future<void> _toggleBookmark() async {
+    final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
+    if (!cookieRequest.loggedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please log in to bookmark the book.')),
+      );
+      return;
+    }
+    await cookieRequest.init();
+
+    String bookId = widget.book.pk.toString();
+    var url = 'https://readnrate.adaptable.app/toggle_bookmark/$bookId/';
+
+    try {
+      var response = await cookieRequest.postJson(
+        url,
+        jsonEncode({}),
+      );
+
+      if (response['status'] == 'success') {
+        setState(() {
+          _isBookmarked = !_isBookmarked;
+        });
+      }
+    } catch (e) {
+      print('Error toggling bookmark: $e');
+    }
+  }
+
+  void _submitReview() async {
+    final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
+    await cookieRequest.init();
+
+    if (!cookieRequest.loggedIn) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please log in to submit the review.')),
+      );
+      return;
+    }
+
+    String bookId = widget.book.pk.toString();
+    var url = 'https://readnrate.adaptable.app/add_review/$bookId/';
+
+    var responseJson = await cookieRequest.postJson(
+      url,
+      jsonEncode({'review_text': _reviewController.text}),
+    );
+
+    if (responseJson['success']) {
+      Review review = Review.fromJson(responseJson);
+      setState(() {
+        _reviews.add(review);
         _reviewController.clear();
         _isReviewVisible = false;
       });
+    } else {
+      print('Failed to submit review: ${responseJson['error']}');
     }
   }
 
@@ -62,17 +247,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
     double screenWidth = screenSize.width;
     double screenHeight = screenSize.height;
 
-    // Adjusted the proportions
-    double imageWidth =
-        screenWidth * 0.35; // Reduced the width to 35% of the screen width
-    double imageHeight =
-        imageWidth * 1.5; // Maintaining aspect ratio of the image
-    double outerPadding =
-        screenWidth * 0.04; // Increased padding to 4% of the screen width
-    double innerSpace =
-        screenHeight * 0.01; // Adjusted space to 1% of the screen height
-    double descriptionFontSize =
-        screenWidth * 0.033; // Reduced font size for the description
+    double imageWidth = screenWidth * 0.35;
+    double imageHeight = imageWidth * 1.5;
+    double outerPadding = screenWidth * 0.04;
+    double innerSpace = screenHeight * 0.01;
+    double descriptionFontSize = screenWidth * 0.033;
 
     return Scaffold(
       appBar: AppBar(
@@ -109,8 +288,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                               widget.book.fields.title,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize:
-                                    screenWidth * 0.05, // Adjusted font size
+                                fontSize: screenWidth * 0.05,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -242,24 +420,22 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             right: 16.0,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.grey[850], // Changed to a gray color
+                            color: Colors.grey[850],
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25.0)),
                             border: Border.all(color: Colors.grey[300]!),
                           ),
                           child: ListTile(
                             title: Text(
-                              review['username']!,
+                              review.username,
                               style: TextStyle(
-                                color:
-                                    Colors.white, // Text color changed to white
-                                fontWeight:
-                                    FontWeight.bold, // Make the username bold
-                                fontSize: 16.0, // Increase the font size
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
                               ),
                             ),
                             subtitle: Text(
-                              review['review']!,
+                              review.reviewText,
                               style: TextStyle(
                                   color: Colors.white.withOpacity(0.7)),
                             ),
