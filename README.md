@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
 #### _Web Version_: https://readnrate.adaptable.app/
-#### APK _Mobile Version_: https://install.appcenter.ms/orgs/readnrate/apps/readnrate/distribution_groups/public
+#### APK _Mobile Version_: https://install.appcenter.ascacascxms/orgs/readnrate/apps/readnrate/distribution_groups/public
 
 ## Daftar Anggota A06:
 
