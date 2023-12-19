@@ -1,68 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:project/home/screens/home_page.dart';
 import 'package:project/home/widget/left_drawer.dart';
-import 'package:project/home/widget/option_card.dart';
+import 'package:project/leaderboard/screens/leaderboard_page.dart';
+import 'package:project/main/screens/book_list.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  final List<Option> items = [
-    Option("Home", Icons.home_outlined, Colors.grey.shade900),
-    Option("All Books", Icons.checklist, Colors.grey.shade800),
-    Option("Logout", Icons.logout, Colors.grey.shade600),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text(
-          'ReadNRate Mobile',
-        ),
-        backgroundColor: Colors.grey.shade800,
-        foregroundColor: Colors.white,
-      ),
-      drawer: const LeftDrawer(),
-      body: Center(
-        child: SingleChildScrollView(
-          // Widget wrapper yang dapat discroll
-          child: Padding(
-            padding: const EdgeInsets.all(10.0), // Set padding dari halaman
-            child: Column(
-              // Widget untuk menampilkan children secara vertikal
-              children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                  // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai
-                  child: Text(
-                    'Review your favorite books', // Text yang menandakan toko
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 30,
-                      // fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                // Grid layout
-                GridView.count(
-                  // Container pada card kita.
-                  primary: true,
-                  padding: const EdgeInsets.all(20),
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 3,
-                  shrinkWrap: true,
-                  children: items.map((Option item) {
-                    // Iterasi untuk setiap item
-                    return OptionCard(item);
-                  }).toList(),
-                ),
-              ],
-            ),
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 4,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          title: Image.asset(
+                'assets/logolong.png',  
+                height: 40,             
+              ),
+              centerTitle: true,
+          backgroundColor: const Color(0xFF14171C), 
+          foregroundColor: Colors.white,
+          elevation: 0,                         
+          bottom: TabBar(
+            unselectedLabelColor: Colors.blueGrey[500],
+            labelColor: Colors.white,
+            dividerColor: Colors.transparent,
+            tabs: const <Widget>[
+              Tab(
+                icon: Icon(Icons.newspaper),
+                // text: "FEEDS",
+              ),
+              Tab(
+                icon: Icon(Icons.leaderboard),
+                // text: "LEADERBOARD",
+              ),
+              Tab(
+                icon: Icon(Icons.local_library),
+                // text: "BOOKS",
+              ),
+              Tab(
+                icon: Icon(Icons.checklist),
+                // text: "READLISTS",
+              ),
+            ],
           ),
         ),
-      ),
+        drawer: const LeftDrawer(),
+        body: TabBarView(
+          children: <Widget>[
+
+            const HomeFeedsPage(),
+
+            const LeaderboardPage(),
+
+            const BooksPage(),
+
+            //Replace with Readlists Page
+            ListView.builder(
+              itemCount: 25,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text('$index'),
+                );
+              },
+            ),
+
+          ]
+        ),
+      )
     );
   }
 }

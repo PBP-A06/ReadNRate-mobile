@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:project/main/screens/book_list.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:provider/provider.dart';
 
@@ -35,25 +36,30 @@ class OptionCard extends StatelessWidget {
           // statement if sebelumnya
           // tambahkan else if baru seperti di bawah ini
           if (option.name == "Logout") {
-                  final response = await request.logout(
-                      "https://readnrate.adaptable.app/auth/logout/");
-                  String message = response["message"];
-                  if (response['status']) {
-                    String uname = response["username"];
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("$message Sampai jumpa, $uname."),
-                    ));
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginPage()),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("$message"),
-                    ));
-                  }
-                }
-
+            final response = await request
+                .logout("https://readnrate.adaptable.app/auth/logout/");
+            String message = response["message"];
+            usernameGlobal = null;
+            if (response['status']) {
+              String uname = response["username"];
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("$message Sampai jumpa, $uname."),
+              ));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("$message"),
+              ));
+            }
+          } else if (option.name == "All Books") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BooksPage()),
+            );
+          }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text

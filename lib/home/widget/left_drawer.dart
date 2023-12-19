@@ -1,109 +1,262 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project/home/screens/menu.dart';
-import 'package:project/leaderboard/screens/leaderboard_page.dart';
-import 'package:project/main/screens/book_list.dart';
+import 'package:project/user_profile/screens/profile.dart';
+import 'package:project/main/screens/login.dart';
+import 'package:project/main/screens/register.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({super.key});
+// ignore: must_be_immutable
+class UserProfileWidget extends StatelessWidget {
+  String username;
+
+  UserProfileWidget({required this.username});
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: Colors.black,
-      child: ListView(
-        children: [
-          const DrawerHeader(
-            // Drawer header
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(66, 66, 66, 1),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  'ReadNRate',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(padding: EdgeInsets.all(10)),
-                Text("Welcome back to ReadNRate!\n Happy reading!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    )),
-              ],
+    return Row(
+      children: [
+        
+        const Padding(
+          padding: EdgeInsets.all(30),
+            child: CircleAvatar(
+              radius: 38,
+              backgroundImage: NetworkImage(
+                  'https://i.pinimg.com/550x/6e/c3/13/6ec313d108678bd6e33d5e6935c3099f.jpg'),
             ),
           ),
-          // Bagian routing
+
+        Text(
+          username,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class LeftDrawer extends StatelessWidget {
+  const LeftDrawer({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
+    return Drawer(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.zero)
+      ),
+      backgroundColor: const Color(0xFF2C343F),
+      child: ListView(
+        children: [
+          if (usernameGlobal != null) //USER IS LOGGED IN
+            Theme(
+              data:  Theme.of(context).copyWith(
+                dividerTheme: const DividerThemeData(color: Colors.transparent),
+              ),
+              child: DrawerHeader(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage('https://upload.wikimedia.org/wikipedia/en/1/14/Inrainbowscover.png'), 
+                    fit: BoxFit.cover,
+                    opacity: 0.3,
+                    ),
+                ),
+                padding: const EdgeInsets.all(0),
+                child: UserProfileWidget(
+                    username: usernameGlobal!), // Use ! to assert non-null
+              )
+            )
+            
+          else //USER NOT LOGGED IN
+            Theme(
+              data:  Theme.of(context).copyWith(
+                dividerTheme: const DividerThemeData(color: Colors.transparent),
+              ),
+              child: DrawerHeader(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/dark_library.jpg'), 
+                    fit: BoxFit.cover,
+                    opacity: 0.2,
+                    ),
+                ),
+                child: Image.asset(
+                  'assets/logolong.png', // Replace with the path to your logo image
+                  height: 80, // Adjust the height as needed
+                ),
+              ),
+            ),
+
           ListTile(
             leading: const Icon(
               Icons.home_outlined,
               color: Colors.white,
             ),
-            title: const Text(
-              'Home',
-              style: TextStyle(color: Colors.white),
+            title: 
+            const Padding ( 
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                'Home',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            // Bagian redirection ke MyHomePage
             onTap: () {
               Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(),
-                  ));
-            },
-          ),
-          //TODO: All Books masih routing ke book_list.dart !!!
-          ListTile(
-            leading: const Icon(
-              Icons.checklist,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'All Books',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              // Route menu ke halaman produk
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BooksPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.checklist,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Leaderboard',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              // Route ke leaderboard page
-              Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const LeaderboardPage()),
+                  builder: (context) => HomePage(),
+                ),
               );
             },
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.logout,
-              color: Colors.white,
+          if (usernameGlobal != null)
+            ListTile(
+              leading: const Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
+              title: const Padding ( 
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                  'Profile',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onTap: () {
+                // Route ke Profile
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfilePage()),
+                );
+              },
             ),
-            title: const Text(
-              'Logout',
-              style: TextStyle(color: Colors.white),
+          if (usernameGlobal != null)
+            ListTile(
+              leading: const Icon(
+                Icons.bookmark,
+                color: Colors.white,
+              ),
+              title: const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Bookmarks',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onTap: () {
+              },
             ),
-            onTap: () {},
-          ),
+          if (usernameGlobal != null)
+            ListTile(
+              leading: const Icon(
+                Icons.favorite,
+                color: Colors.white,
+              ),
+              title: const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Likes',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onTap: () {
+              },
+            ),
+          if (usernameGlobal != null)
+            ListTile(
+              title: Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                  onPressed: () async {
+
+                    // Show loading dialog
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    );
+
+                    final response = await request
+                        .logout("https://readnrate.adaptable.app/auth/logout/");
+                    String message = response["message"];
+                    usernameGlobal = null;
+                    if (response['status']) {
+                      String uname = response["username"];
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("See you next time, $uname."),
+                      ));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("$message"),
+                      ));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red[400], 
+                    elevation: 1,
+                  ),
+                  child: Text(
+                    'Logout',
+                    style: GoogleFonts.almarai(
+                      textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                    ),
+                  )
+                ),
+              ),
+            ),
+          if (usernameGlobal == null)
+            ListTile(
+              leading: const Icon(
+                Icons.login,
+                color: Colors.white,
+              ),
+              title: const Padding ( 
+              padding: EdgeInsets.only(left: 10),
+              child:  Text(
+                  'Sign in',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
+            ),
+          if (usernameGlobal == null)
+            ListTile(
+              leading: const Icon(
+                Icons.person_add,
+                color: Colors.white,
+              ),
+              title: const Padding ( 
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                  'Register',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                );
+              },
+            ),
         ],
       ),
     );
