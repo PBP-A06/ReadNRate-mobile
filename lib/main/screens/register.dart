@@ -173,7 +173,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                         if (response["status"] == "success") {
                           Navigator.pop(context); // back to login page
-                          usernameGlobal = username;
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(SnackBar(
@@ -182,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
+                            MaterialPageRoute(builder: (context) => LoginPage()),
                           );
                           
                         } else {

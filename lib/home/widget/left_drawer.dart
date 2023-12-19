@@ -29,6 +29,7 @@ class UserProfileWidget extends StatelessWidget {
 
         Text(
           username,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,

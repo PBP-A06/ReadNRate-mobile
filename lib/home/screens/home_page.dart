@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/book/models/book.dart';
+import 'package:project/home/models/review_home.dart';
 import 'package:project/home/widget/auto_image_slider.dart';
 import 'package:project/home/widget/book_home_card.dart';
+import 'package:project/home/widget/review_card.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:project/main/screens/register.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +31,24 @@ Future<List<Book>> fetchFourRandomBooks() async {
 
   listBook.shuffle();
   return listBook.take(4).toList();
+}
+
+Future<List<ReviewHome>> fetchFourRecentReviews() async {
+
+  var url = 'https://readnrate.adaptable.app/get_reviews_all/';
+  var response = await http.get(
+    Uri.parse(url),
+    headers: {"Content-Type": "application/json"}
+  );
+  
+  List<ReviewHome> listOfReviews = [];
+  List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+ 
+  for (var d in data) {
+    listOfReviews.add(ReviewHome.fromJson(d));
+  }
+
+  return listOfReviews.toList();
 }
 
 class HomeFeedsPage extends StatelessWidget {
@@ -258,33 +278,24 @@ class HomeFeedsPage extends StatelessWidget {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width - 2 * 20.0, //Max width follows width of divider
                   child: FutureBuilder(
-                    future: null,
+                    future: fetchFourRecentReviews(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.data == null) {
-                        return GridView.count(
-                          crossAxisCount: 4,
+                        return ListView(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          crossAxisSpacing: 6.0, // Adjust the spacing between items
-                          mainAxisSpacing: 6.0,  // Adjust the spacing between rows
-                          childAspectRatio: 0.7, // Adjust the aspect ratio for each item
                           children: List.generate(4, (index) {
                             return Image.asset('assets/ReadNRate Logo 2.png'); // Replace PlaceholderImage with your actual placeholder widget
                           }),
                         );
                       } else {
-                        return GridView.count(
-                          crossAxisCount: 4,
+                        return ListView(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          crossAxisSpacing: 6.0, // Adjust the spacing between items
-                          mainAxisSpacing: 6.0,  // Adjust the spacing between rows
-                          childAspectRatio: 0.7, // Adjust the aspect ratio for each item
                           children: 
-                            (snapshot.data! as List<Book>)
-                              .map((Book book) {
-                            return BookCardHome(book);
-                            }).toList(),
+                            (snapshot.data! as List<ReviewHome>).map(
+                              (ReviewHome review) {
+                                return ReviewCard(review);
+                              }
+                            ).toList(),
                         );
                       }
                     }
