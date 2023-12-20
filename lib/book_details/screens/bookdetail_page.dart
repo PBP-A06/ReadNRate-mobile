@@ -4,6 +4,7 @@ import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'dart:convert';
 import 'package:project/book/models/book.dart';
 import 'package:project/book_details/models/book_review.dart';
+import 'package:project/book_details/widget/review_list.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   bool _isLiked = false;
   bool _isBookmarked = false;
   int _likeCount = 0;
+  double _reviewFormHeight = 0;
   final TextEditingController _reviewController = TextEditingController();
   List<Review> _reviews = [];
 
@@ -128,13 +130,15 @@ class _BookDetailPageState extends State<BookDetailPage> {
     final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
     if (!cookieRequest.loggedIn) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please log in to write a review.')),
+        SnackBar(content: Text('Login to write a review.')),
       );
       return;
     }
 
     setState(() {
       _isReviewVisible = !_isReviewVisible;
+      _reviewFormHeight =
+          _isReviewVisible ? 200 : 0; // Adjust this value as needed
     });
   }
 
@@ -142,7 +146,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
     if (!cookieRequest.loggedIn) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please log in to like the book.')),
+        SnackBar(content: Text('Login to like the book.')),
       );
       return;
     }
@@ -172,7 +176,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     final cookieRequest = Provider.of<CookieRequest>(context, listen: false);
     if (!cookieRequest.loggedIn) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please log in to bookmark the book.')),
+        SnackBar(content: Text('Login to bookmark the book.')),
       );
       return;
     }
@@ -203,7 +207,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
     if (!cookieRequest.loggedIn) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please log in to submit the review.')),
+        SnackBar(content: Text('Login to submit the review.')),
       );
       return;
     }
@@ -248,17 +252,18 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomCenter,
-          colors: [ Color.fromARGB(255, 36, 41, 49), Color.fromARGB(255, 24, 28, 33)]
-        )
-      ),
+          gradient: LinearGradient(
+              begin: AlignmentDirectional.topStart,
+              end: AlignmentDirectional.bottomCenter,
+              colors: [
+            Color.fromARGB(255, 36, 41, 49),
+            Color.fromARGB(255, 24, 28, 33)
+          ])),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          // backgroundColor: const Color.fromARGB(255, 36, 41, 49), 
-          backgroundColor: Colors.transparent, 
+          // backgroundColor: const Color.fromARGB(255, 36, 41, 49),
+          backgroundColor: Colors.transparent,
           foregroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
@@ -328,9 +333,18 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   margin: EdgeInsets.symmetric(vertical: innerSpace),
                   padding: EdgeInsets.all(innerSpace),
                   decoration: BoxDecoration(
-                    color: Colors.white24,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.white),
+                    color: Color.fromARGB(255, 17, 21, 26),
+                    borderRadius: BorderRadius.circular(12),
+                    border:
+                        Border.all(color: Color.fromARGB(255, 228, 106, 19)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.5),
+                        spreadRadius: 0,
+                        blurRadius: 8,
+                        offset: Offset(0, 4), // changes position of shadow
+                      ),
+                    ],
                   ),
                   child: Text(
                     widget.book.fields.bookDescription,
@@ -370,77 +384,59 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                 ),
                 if (_isReviewVisible)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      color: Colors.grey[850],
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            TextField(
-                              controller: _reviewController,
-                              maxLines: null,
-                              style: TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                hintText: 'Write your review here...',
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.6)),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: _submitReview,
-                              child: Text(
-                                'Submit Review',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  decoration: TextDecoration.underline,
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 500),
+                    height: _reviewFormHeight,
+                    curve: Curves.easeInOut,
+                    child: SingleChildScrollView(
+                      child: _isReviewVisible
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8.0),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                color: Colors.grey[850],
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      TextField(
+                                        controller: _reviewController,
+                                        maxLines: null,
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: InputDecoration(
+                                          hintText: 'Write your review here...',
+                                          hintStyle: TextStyle(
+                                              color: Colors.white
+                                                  .withOpacity(0.6)),
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: _submitReview,
+                                        child: Text(
+                                          'Submit Review',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            )
+                          : SizedBox.shrink(),
                     ),
                   ),
                 ..._reviews
-                    .map((review) => Container(
-                          margin: EdgeInsets.all(8.0),
-                          padding: EdgeInsets.only(
-                            top: 8.0,
-                            bottom: 8.0,
-                            left: 16.0,
-                            right: 16.0,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[850],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(25.0)),
-                            border: Border.all(color: Colors.grey[300]!),
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              review.username,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                            subtitle: Text(
-                              review.reviewText,
-                              style: TextStyle(
-                                  color: Colors.white.withOpacity(0.7)),
-                            ),
-                          ),
-                        ))
+                    .map((review) => ReviewListItem(review: review))
                     .toList(),
                 SizedBox(height: 50),
               ],
