@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/home/screens/menu.dart';
-import 'package:project/leaderboard/screens/leaderboard_page.dart';
-import 'package:project/main/screens/book_list.dart';
-import 'package:project/readlist/screens/readlist_list.dart';
 import 'package:project/user_profile/screens/profile.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:project/main/screens/register.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class UserProfileWidget extends StatelessWidget {
@@ -120,95 +116,6 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
-
-          ListTile(
-            leading: const Icon(
-              Icons.leaderboard,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Leaderboard',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LeaderboardPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.checklist,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'All Books',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BooksPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.leaderboard,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Leaderboard',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LeaderboardPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.library_books,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Readlists',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ReadlistPage()),
-              );
-            },
-          ),
-          // if (usernameGlobal != null)
-          // ListTile(//READLIST
-          //   leading: const Icon(
-          //     Icons.checklist,
-          //     color: Colors.white,
-          //   ),
-          //   title: const Text(
-          //     'Readlists',
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          //   onTap: () {
-          //     // TODO: Route ke Readlist page
-
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => const ReadlistPage()),
-          //     );
-          //   },
-          // ),
           
           if (usernameGlobal != null)
             ListTile(

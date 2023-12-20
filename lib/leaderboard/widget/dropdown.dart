@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/book/models/book.dart';
 
@@ -103,8 +104,11 @@ class _MyDropdownState extends State<MyDropdown> {
                       children: [
                         DropdownButton<String>(
                           value: selectedOption,
-                          style: const TextStyle(
-                              color: Color.fromRGBO(97, 97, 97, 1)),
+                          style: GoogleFonts.almarai(
+                              textStyle: const TextStyle(
+                            color: Color.fromRGBO(97, 97, 97, 1),
+                            fontSize: 14,
+                          )),
                           onChanged: (newValue) {
                             int index = snapshot.data!.indexWhere(
                               (book) => book.fields.title == newValue,
@@ -130,11 +134,11 @@ class _MyDropdownState extends State<MyDropdown> {
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: Text(
                       '"$selectedActualTitle" is currently ranked $selectedRank by rating.',
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: GoogleFonts.almarai(
+                          textStyle: const TextStyle(
                         color: Colors.white,
-                        // overflow: TextOverflow.ellipsis,
-                      ),
+                        fontSize: 14,
+                      )),
                       textAlign: TextAlign.center,
                     ),
                   ),

@@ -253,15 +253,22 @@ class _BookDetailPageState extends State<BookDetailPage> {
     double innerSpace = screenHeight * 0.01;
     double descriptionFontSize = screenWidth * 0.033;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Book Detail'),
-        backgroundColor: Colors.grey[850],
-        foregroundColor: Colors.white,
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: AlignmentDirectional.topStart,
+          end: AlignmentDirectional.bottomCenter,
+          colors: [ Color.fromARGB(255, 36, 41, 49), Color.fromARGB(255, 24, 28, 33)]
+        )
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.black,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          // backgroundColor: const Color.fromARGB(255, 36, 41, 49), 
+          backgroundColor: Colors.transparent, 
+          foregroundColor: Colors.white,
+        ),
+        body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: outerPadding),
             child: Column(
