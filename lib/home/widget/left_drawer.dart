@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/home/screens/menu.dart';
 import 'package:project/leaderboard/screens/leaderboard_page.dart';
+import 'package:project/main.dart';
 import 'package:project/main/screens/book_list.dart';
 import 'package:project/readlist/screens/readlist_list.dart';
 import 'package:project/user_profile/screens/profile.dart';
@@ -50,6 +51,7 @@ class LeftDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authToken = Provider.of<AuthProvider>(context).authToken;
     final request = context.watch<CookieRequest>();
 
     return Drawer(
@@ -228,7 +230,7 @@ class LeftDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const ProfilePage()),
+                      builder: (context) => ProfilePage()),
                 );
               },
             ),

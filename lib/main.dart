@@ -4,7 +4,19 @@ import 'package:project/home/screens/menu.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider<AuthProvider>(
+      create: (context) => AuthProvider(),
+      child: MyApp(),
+    ),);
+}
+
+class AuthProvider extends ChangeNotifier {
+  String? authToken;
+
+  void setAuthToken(String token) {
+    authToken = token;
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
