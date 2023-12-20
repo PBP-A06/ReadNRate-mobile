@@ -43,12 +43,16 @@ Future<List<ReviewHome>> fetchFourRecentReviews() async {
   
   List<ReviewHome> listOfReviews = [];
   List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
- 
+
   for (var d in data) {
     listOfReviews.add(ReviewHome.fromJson(d));
   }
+  
+  // Reverse the list and take only the first four elements
+  List<ReviewHome> reversedList = listOfReviews.reversed.toList();
+  List<ReviewHome> firstFourReviews = reversedList.take(4).toList();
 
-  return listOfReviews.toList();
+  return firstFourReviews;
 }
 
 class HomeFeedsPage extends StatelessWidget {
@@ -226,7 +230,7 @@ class HomeFeedsPage extends StatelessWidget {
                         return GridView.count(
                           crossAxisCount: 4,
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          // physics: const NeverScrollableScrollPhysics(),
                           crossAxisSpacing: 6.0, // Adjust the spacing between items
                           mainAxisSpacing: 6.0,  // Adjust the spacing between rows
                           childAspectRatio: 0.7, // Adjust the aspect ratio for each item

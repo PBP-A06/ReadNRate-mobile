@@ -3,6 +3,7 @@ import 'package:project/home/screens/home_page.dart';
 import 'package:project/home/widget/left_drawer.dart';
 import 'package:project/leaderboard/screens/leaderboard_page.dart';
 import 'package:project/main/screens/book_list.dart';
+import 'package:project/readlist/screens/readlist_list.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -48,24 +49,16 @@ class HomePage extends StatelessWidget {
           ),
         ),
         drawer: const LeftDrawer(),
-        body: TabBarView(
+        body: const TabBarView(
           children: <Widget>[
 
-            const HomeFeedsPage(),
+            HomeFeedsPage(),
 
-            const LeaderboardPage(),
+            LeaderboardPage(),
 
-            const BooksPage(),
+            BooksPage(),
 
-            //Replace with Readlists Page
-            ListView.builder(
-              itemCount: 25,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text('$index'),
-                );
-              },
-            ),
+            ReadlistPage(),
 
           ]
         ),

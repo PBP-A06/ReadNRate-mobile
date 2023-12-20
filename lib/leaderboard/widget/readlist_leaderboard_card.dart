@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/leaderboard/models/readlist.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:project/readlist/screens/models/readlist.dart';
 
 class ReadlistCard extends StatelessWidget {
   final Readlist readlist;
@@ -59,9 +60,13 @@ class ReadlistCard extends StatelessWidget {
                     //           readlist)),
                     // );
                   },
-                  child: const Text(
+                  child: Text(
                     "See Details",
-                    style: TextStyle(color: Colors.white, fontSize: 13),
+                    style: GoogleFonts.almarai(
+                        textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    )),
                   ),
                 ),
               ),
