@@ -23,7 +23,7 @@ class UserProfileWidget extends StatelessWidget {
             child: CircleAvatar(
               radius: 38,
               backgroundImage: NetworkImage(
-                  'https://i.pinimg.com/550x/6e/c3/13/6ec313d108678bd6e33d5e6935c3099f.jpg'),
+                  'https://t4.ftcdn.net/jpg/03/31/69/91/360_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg'),
             ),
           ),
 
@@ -63,7 +63,7 @@ class LeftDrawer extends StatelessWidget {
               child: DrawerHeader(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage('https://upload.wikimedia.org/wikipedia/en/1/14/Inrainbowscover.png'), 
+                    image: NetworkImage('https://img.freepik.com/free-photo/abundant-collection-antique-books-wooden-shelves-generated-by-ai_188544-29660.jpg?size=626&ext=jpg&ga=GA1.1.1546980028.1702857600&semt=sph'), 
                     fit: BoxFit.cover,
                     opacity: 0.3,
                     ),
@@ -116,6 +116,7 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
+          
           if (usernameGlobal != null)
             ListTile(
               leading: const Icon(

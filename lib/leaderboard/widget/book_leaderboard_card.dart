@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project/book/models/book.dart';
 import 'package:project/book_details/screens/bookdetail_page.dart';
 
@@ -22,31 +23,31 @@ class BookCard extends StatelessWidget {
             children: [
               Center(
                 child: ClipRRect(
-                  // rounded image
                   borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    book.fields.imageLink,
+                  child: FadeInImage(
+                    placeholder:
+                        const AssetImage('assets/ReadNRate Logo 2.png'),
+                    // rounded image
+                    image: NetworkImage(
+                      book.fields.imageLink,
+                    ),
                     width: 115.0,
                   ),
                 ),
               ),
               const SizedBox(height: 5),
-              Text(
-                "${book.fields.title}",
-                textAlign: TextAlign.left,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
+              Text("${book.fields.title}",
+                  textAlign: TextAlign.left,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.almarai(
+                      textStyle: const TextStyle(color: Colors.white))),
               const SizedBox(height: 5),
               Text(
                 "--${book.fields.category}",
                 textAlign: TextAlign.right,
-                style: const TextStyle(color: Colors.white),
+                style: GoogleFonts.almarai(
+                    textStyle: const TextStyle(color: Colors.white)),
               ),
               const Spacer(),
               Center(
@@ -63,9 +64,11 @@ class BookCard extends StatelessWidget {
                           builder: (context) => BookDetailPage(book: book)),
                     );
                   },
-                  child: const Text(
+                  child: Text(
                     "See Details",
-                    style: TextStyle(color: Colors.white, fontSize: 13),
+                    style: GoogleFonts.almarai(
+                        textStyle:
+                            const TextStyle(color: Colors.white, fontSize: 13,)),
                   ),
                 ),
               ),
