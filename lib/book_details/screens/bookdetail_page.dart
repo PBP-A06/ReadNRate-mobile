@@ -7,13 +7,6 @@ import 'package:project/book_details/models/book_review.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:provider/provider.dart';
 
-/*
-To Do :
-1. Benerin like dan bookmark, harus tetep ada sesuai usernya walaupun udah pindah halaman/logout
-2. Benerin Null & String di review
-3. Tambahin snackbar klo mencet like dan bookmark tp belom login
-*/
-
 class BookDetailPage extends StatefulWidget {
   final Book book;
 
