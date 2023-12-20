@@ -41,7 +41,7 @@ class Login {
   // Method to be called after object creation
   Future<String> loginUser(String username, String password) async {
     var url = Uri.parse('http://localhost:8000/login/');
-
+    
     var response = await http.post(
       url,
       body: {
@@ -74,23 +74,22 @@ class _ProfilePageState extends State<ProfilePage> {
   // Use the access token to fetch profile data
   // List<Book> profileData = await fetchProfileData(authToken);
 
+
   @override
   void initState() {
     super.initState();
     userInstance = Login();
-    // String authToken;
-    // // fetchDataFunction = fetchProfileData(authToken) as Future<List>
-    //     Function(); // Initial fetch function
+    String authToken;
+    fetchDataFunction = fetchProfileData(authToken) as Future<List> Function(); // Initial fetch function
   }
 
   Future<List<Book>> fetchProfileData(String authToken) async {
     var url = Uri.parse('http://localhost:8000/profile/json/');
-
+    
     var response = await http.get(
       url,
       headers: {
-        'Authorization':
-            'Bearer $authToken', // Include the token in the headers
+        'Authorization': 'Bearer $authToken', // Include the token in the headers
       },
     );
 
@@ -101,23 +100,20 @@ class _ProfilePageState extends State<ProfilePage> {
       // Assuming the JSON data has a structure similar to a Book class
       for (var d in data['books_read']) {
         if (d != null) {
-          listBook.add(Book.fromJson(
-              d)); // Assuming Book.fromJson converts JSON to Book object
+          listBook.add(Book.fromJson(d)); // Assuming Book.fromJson converts JSON to Book object
         }
       }
 
       // Add similar loops for 'bookmarked_books' and 'liked_books' if required
       for (var d in data['bookmarked_books']) {
         if (d != null) {
-          listBook.add(Book.fromJson(
-              d)); // Assuming Book.fromJson converts JSON to Book object
+          listBook.add(Book.fromJson(d)); // Assuming Book.fromJson converts JSON to Book object
         }
       }
 
       for (var d in data['liked_books']) {
         if (d != null) {
-          listBook.add(Book.fromJson(
-              d)); // Assuming Book.fromJson converts JSON to Book object
+          listBook.add(Book.fromJson(d)); // Assuming Book.fromJson converts JSON to Book object
         }
       }
 
@@ -129,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<String> registerUser(String username, String password) async {
     var url = Uri.parse('http://localhost:8000/register/');
-
+    
     var response = await http.post(
       url,
       body: {
@@ -485,50 +481,50 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // ... existing scaffold properties ...
-        // body: FutureBuilder(
-        //   future: fetchProfileData(),
-        //   builder: (context, AsyncSnapshot<List<Book>> snapshot) {
-        //     // Checking for various snapshot states
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
-        //       return const Center(
-        //         child: CircularProgressIndicator(),
-        //       );
-        //     } else if (snapshot.hasError) {
-        //       return Center(
-        //         child: Text('Error fetching data: ${snapshot.error}'),
-        //       );
-        //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-        //       return const Center(
-        //         child: Text('No data available'),
-        //       );
-        //     } else {
-        //       // Data is available and ready to be displayed
-        //       return SingleChildScrollView(
-        //         padding: const EdgeInsets.all(5),
-        //         child: Column(
-        //           children: [
-        //             // ... your other widgets for buttons or sort options ...
+      // ... existing scaffold properties ...
+      body: FutureBuilder(
+        future: fetchProfileData(),
+        builder: (context, AsyncSnapshot<List<Book>> snapshot) {
+          // Checking for various snapshot states
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error fetching data: ${snapshot.error}'),
+            );
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
+              child: Text('No data available'),
+            );
+          } else {
+            // Data is available and ready to be displayed
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(5),
+              child: Column(
+                children: [
+                  // ... your other widgets for buttons or sort options ...
 
-        //             // GridView to display fetched books
-        //             GridView.count(
-        //               primary: true,
-        //               padding: const EdgeInsets.all(10),
-        //               crossAxisSpacing: 10,
-        //               mainAxisSpacing: 10,
-        //               crossAxisCount: 2,
-        //               shrinkWrap: true,
-        //               childAspectRatio: 0.48,
-        //               children: snapshot.data!.map((Book book) {
-        //                 return BookCard(book);
-        //               }).toList(),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     }
-        //   },
-        // ),
-        );
+                  // GridView to display fetched books
+                  GridView.count(
+                    primary: true,
+                    padding: const EdgeInsets.all(10),
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    childAspectRatio: 0.48,
+                    children: snapshot.data!.map((Book book) {
+                      return BookCard(book);
+                    }).toList(),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }
