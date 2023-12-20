@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:project/readlist/models/readlist.dart';
+import 'package:project/readlist/screens/readlist_detail.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/readlist/screens/models/readlist.dart';
+
 
 class ReadlistCard extends StatelessWidget {
   final Readlist readlist;
@@ -53,12 +57,11 @@ class ReadlistCard extends StatelessWidget {
                   ),
                   // nanti redirect to details page di modul readlist
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => ReadlistDetailsPage(
-                    //           readlist)),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ReadlistDetailPage(readlistId: readlist.pk)),
+                    );
                   },
                   child: Text(
                     "See Details",

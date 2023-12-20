@@ -4,9 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/book/models/book.dart';
 import 'package:project/leaderboard/widget/book_leaderboard_card.dart';
+
+import 'package:project/readlist/models/readlist.dart';
+
 import 'package:project/leaderboard/widget/dropdown.dart';
 import 'package:project/leaderboard/widget/readlist_leaderboard_card.dart';
-import 'package:project/readlist/screens/models/readlist.dart';
+
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({Key? key}) : super(key: key);
