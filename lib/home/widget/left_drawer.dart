@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/home/screens/menu.dart';
-import 'package:project/leaderboard/screens/leaderboard_page.dart';
-import 'package:project/main/screens/book_list.dart';
-import 'package:project/readlist/screens/readlist_list.dart';
 import 'package:project/user_profile/screens/profile.dart';
 import 'package:project/main/screens/login.dart';
 import 'package:project/main/screens/register.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class UserProfileWidget extends StatelessWidget {
@@ -27,7 +23,7 @@ class UserProfileWidget extends StatelessWidget {
             child: CircleAvatar(
               radius: 38,
               backgroundImage: NetworkImage(
-                  'https://i.pinimg.com/550x/6e/c3/13/6ec313d108678bd6e33d5e6935c3099f.jpg'),
+                  'https://t4.ftcdn.net/jpg/03/31/69/91/360_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg'),
             ),
           ),
 
@@ -67,7 +63,7 @@ class LeftDrawer extends StatelessWidget {
               child: DrawerHeader(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage('https://upload.wikimedia.org/wikipedia/en/1/14/Inrainbowscover.png'), 
+                    image: NetworkImage('https://img.freepik.com/free-photo/abundant-collection-antique-books-wooden-shelves-generated-by-ai_188544-29660.jpg?size=626&ext=jpg&ga=GA1.1.1546980028.1702857600&semt=sph'), 
                     fit: BoxFit.cover,
                     opacity: 0.3,
                     ),
@@ -120,95 +116,6 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
-
-          ListTile(
-            leading: const Icon(
-              Icons.leaderboard,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Leaderboard',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LeaderboardPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.checklist,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'All Books',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const BooksPage()),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.leaderboard,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Leaderboard',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LeaderboardPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.library_books,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Readlists',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ReadlistPage()),
-              );
-            },
-          ),
-          // if (usernameGlobal != null)
-          // ListTile(//READLIST
-          //   leading: const Icon(
-          //     Icons.checklist,
-          //     color: Colors.white,
-          //   ),
-          //   title: const Text(
-          //     'Readlists',
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          //   onTap: () {
-          //     // TODO: Route ke Readlist page
-
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => const ReadlistPage()),
-          //     );
-          //   },
-          // ),
           
           if (usernameGlobal != null)
             ListTile(
@@ -228,7 +135,7 @@ class LeftDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const ProfilePage()),
+                      builder: (context) => HomePage()),
                 );
               },
             ),

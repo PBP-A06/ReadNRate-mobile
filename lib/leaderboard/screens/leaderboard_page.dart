@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/book/models/book.dart';
 import 'package:project/leaderboard/widget/book_leaderboard_card.dart';
+
 import 'package:project/readlist/models/readlist.dart';
+
 import 'package:project/leaderboard/widget/dropdown.dart';
 import 'package:project/leaderboard/widget/readlist_leaderboard_card.dart';
+
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({Key? key}) : super(key: key);
@@ -136,170 +140,182 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        body: FutureBuilder(
-            future: fetchDataFunction(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                if (!snapshot.hasData) {
-                  return const Column(
-                    children: [
-                      Text(
-                        "Belum ada data.",
-                        style:
-                            TextStyle(color: Color(0xff59A5D8), fontSize: 20),
-                      ),
-                      SizedBox(height: 8),
-                    ],
-                  );
+    return Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: AlignmentDirectional.topStart,
+                end: AlignmentDirectional.bottomCenter,
+                colors: [
+              Color.fromARGB(255, 36, 41, 49),
+              Color.fromARGB(255, 24, 28, 33)
+            ])),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: FutureBuilder(
+              future: fetchDataFunction(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.data == null) {
+                  return const Center(child: CircularProgressIndicator());
                 } else {
-                  return SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          Text(
-                            titleText, // Top 10/100 by Rating/Likes/Readlist
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
+                  if (!snapshot.hasData) {
+                    return const Column(
+                      children: [
+                        Text(
+                          "Belum ada data.",
+                          style:
+                              TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                        ),
+                        SizedBox(height: 8),
+                      ],
+                    );
+                  } else {
+                    return SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              titleText, // Top 10/100 by Rating/Likes/Readlist
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.roboto(
+                                  color:
+                                      const Color.fromARGB(255, 192, 206, 218),
+                                  fontWeight: FontWeight.w100,
+                                  fontSize: 30),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Text(
-                            'Change to sort by?',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontStyle: FontStyle.italic,
+                            const SizedBox(height: 10),
+                            Text(
+                              'Change to sort by?',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.almarai(
+                                  textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontStyle: FontStyle.italic)),
                             ),
-                          ),
-                          const SizedBox(height: 7),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.grey.shade700),
+                            const SizedBox(height: 7),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.grey.shade700),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      fetchDataFunction = fetch10BestRatedBooks;
+                                    });
+                                  },
+                                  child: Text(
+                                    "Rating (Top 10)",
+                                    style: GoogleFonts.almarai(
+                                        textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    )),
+                                  ),
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    fetchDataFunction = fetch10BestRatedBooks;
-                                  });
-                                },
-                                child: const Text(
-                                  "Rating (Top 10)",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 13),
+                                const SizedBox(width: 10),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.grey.shade700),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      fetchDataFunction =
+                                          fetch100BestRatedBooks;
+                                    });
+                                  },
+                                  child: Text(
+                                    "Rating (Top 100)",
+                                    style: GoogleFonts.almarai(
+                                        textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    )),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 10),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.grey.shade700),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    fetchDataFunction = fetch100BestRatedBooks;
-                                  });
-                                },
-                                child: const Text(
-                                  "Rating (Top 100)",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 13),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.grey.shade700),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    fetchDataFunction = fetch10MostLikedBooks;
-                                  });
-                                },
-                                child: const Text(
-                                  "  Likes (Top 10) ",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 13),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.grey.shade700),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    fetchDataFunction = fetch100MostLikedBooks;
-                                  });
-                                },
-                                child: const Text(
-                                  " Likes (Top 100)  ",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 13),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.grey.shade700),
+                              ],
                             ),
-                            // nanti benerin, not done yet
-                            onPressed: () {
-                              setState(() {
-                                fetchDataFunction = fetchReadlists;
-                              });
-                            },
-                            child: const Text(
-                              "Readlist (Top 10)",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 13),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.grey.shade700),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      fetchDataFunction = fetch10MostLikedBooks;
+                                    });
+                                  },
+                                  child: Text(
+                                    "  Likes (Top 10) ",
+                                    style: GoogleFonts.almarai(
+                                        textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    )),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.grey.shade700),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      fetchDataFunction =
+                                          fetch100MostLikedBooks;
+                                    });
+                                  },
+                                  child: Text(
+                                    " Likes (Top 100)  ",
+                                    style: GoogleFonts.almarai(
+                                        textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    )),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          MyDropdown(),
-                          if (snapshot.data![0] is Book)
-                            GridView.count(
-                              primary: true,
-                              padding: const EdgeInsets.all(10),
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                              crossAxisCount: 2,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              childAspectRatio: 0.48,
-                              children: (snapshot.data! as List<Book>)
-                                  .map((Book book) {
-                                return BookCard(book);
-                              }).toList(),
-                            )
-                          else
-                            GridView.count(
+                            const SizedBox(height: 10),
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.grey.shade700),
+                              ),
+                              // nanti benerin, not done yet
+                              onPressed: () {
+                                setState(() {
+                                  fetchDataFunction = fetchReadlists;
+                                });
+                              },
+                              child: Text(
+                                "Readlist (Top 10)",
+                                style: GoogleFonts.almarai(
+                                    textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                )),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            MyDropdown(),
+                            if (snapshot.data![0] is Book)
+                              GridView.count(
                                 primary: true,
                                 padding: const EdgeInsets.all(10),
                                 crossAxisSpacing: 10,
@@ -307,17 +323,33 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                 crossAxisCount: 2,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                childAspectRatio: 1,
-                                children: (snapshot.data! as List<Readlist>)
-                                    .map((Readlist readlist) {
-                                  return ReadlistCard(readlist);
-                                }).toList())
-                        ],
+                                childAspectRatio: 0.48,
+                                children: (snapshot.data! as List<Book>)
+                                    .map((Book book) {
+                                  return BookCard(book);
+                                }).toList(),
+                              )
+                            else
+                              GridView.count(
+                                  primary: true,
+                                  padding: const EdgeInsets.all(10),
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  crossAxisCount: 2,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  childAspectRatio: 1,
+                                  children: (snapshot.data! as List<Readlist>)
+                                      .map((Readlist readlist) {
+                                    return ReadlistCard(readlist);
+                                  }).toList())
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 }
-              }
-            }));
+              }),
+        ));
   }
 }
